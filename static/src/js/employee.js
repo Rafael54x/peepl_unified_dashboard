@@ -9,6 +9,7 @@ class Employee extends Component {
 
     setup() {
         this.orm = useService("orm");
+        this.action = useService("action");
         const fullName = session.partner_display_name || session.name || 'User';
         this.userName = fullName.includes(',') ? fullName.split(',').pop().trim() : fullName;
         
@@ -131,6 +132,16 @@ class Employee extends Component {
 
     handleDepartmentFilter(deptId) {
         this.state.filterDepartment = this.state.filterDepartment === deptId ? null : deptId;
+    }
+
+    openEmployeeForm(employeeId) {
+        this.action.doAction({
+            type: 'ir.actions.act_window',
+            res_model: 'hr.employee',
+            res_id: employeeId,
+            views: [[false, 'form']],
+            target: 'current'
+        });
     }
 }
 

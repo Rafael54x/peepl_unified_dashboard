@@ -13,8 +13,8 @@
                             <h1 class="peepl-employee-title">Employee Directory</h1>
                             <p class="peepl-employee-subtitle">
                                 <t t-if="state.isHRDashboardUserOnly">Your Profile</t>
-                                <t t-elif="state.isHRDashboardManager">Department Employees</t>
-                                <t t-else="">All Employees</t>
+                                <t t-if="state.isHRDashboardManager and !state.isHRDashboardUserOnly">Department Employees</t>
+                                <t t-if="!state.isHRDashboardUserOnly and !state.isHRDashboardManager">All Employees</t>
                             </p>
                         </div>
                     </div>
@@ -28,8 +28,7 @@
                             type="text" 
                             class="peepl-search-input"
                             placeholder="Search by name, email, or position..."
-                            t-value="state.searchQuery"
-                            t-on-input="(e) => this.handleSearchChange(e.target.value)"
+                            t-model="state.searchQuery"
                         />
                     </div>
 
@@ -53,13 +52,13 @@
                 <!-- Employee Grid Section -->
                 <div class="peepl-employee-grid">
                     <t t-if="getFilteredEmployees().length > 0" t-foreach="getFilteredEmployees()" t-as="employee" t-key="employee.id">
-                        <div class="peepl-employee-card">
+                        <div class="peepl-employee-card" t-on-click="() => this.openEmployeeForm(employee.id)" style="cursor: pointer;">
                             <!-- Avatar Section -->
                             <div class="peepl-employee-card-header">
                                 <t t-if="employee.image">
                                     <img t-attf-src="{{employee.image}}" class="peepl-employee-avatar" t-attf-alt="{{employee.name}}"/>
                                 </t>
-                                <t t-else="">
+                                <t t-if="!employee.image">
                                     <div class="peepl-employee-avatar-placeholder" t-esc="employee.initials"/>
                                 </t>
                                 <div class="peepl-employee-status"></div>
@@ -76,16 +75,16 @@
 
                             <!-- Contact Section -->
                             <div class="peepl-employee-card-footer">
-                                <a t-attf-href="mailto:{{employee.email}}" class="peepl-contact-link peepl-email-link" t-attf-title="{{employee.email}}">
+                                <a t-attf-href="mailto:{{employee.email}}" class="peepl-contact-link peepl-email-link" t-attf-title="{{employee.email}}" t-on-click.stop="">
                                     <i class="fa fa-envelope"/>
                                 </a>
-                                <a t-attf-href="tel:{{employee.phone}}" class="peepl-contact-link peepl-phone-link" t-attf-title="{{employee.phone}}" t-if="employee.phone !== '-'">
+                                <a t-attf-href="tel:{{employee.phone}}" class="peepl-contact-link peepl-phone-link" t-attf-title="{{employee.phone}}" t-if="employee.phone !== '-'" t-on-click.stop="">
                                     <i class="fa fa-phone"/>
                                 </a>
                             </div>
                         </div>
                     </t>
-                    <t t-else="">
+                    <t t-if="getFilteredEmployees().length === 0">
                         <div class="peepl-employee-empty">
                             <i class="fa fa-inbox"/>
                             <h3>No Employees Found</h3>
@@ -100,8 +99,8 @@
                         <div class="peepl-stat-value" t-esc="getFilteredEmployees().length"/>
                         <div class="peepl-stat-label">
                             <t t-if="state.isHRDashboardUserOnly">You</t>
-                            <t t-elif="state.isHRDashboardManager">Team Members</t>
-                            <t t-else="">Employees</t>
+                            <t t-if="state.isHRDashboardManager and !state.isHRDashboardUserOnly">Team Members</t>
+                            <t t-if="!state.isHRDashboardUserOnly and !state.isHRDashboardManager">Employees</t>
                         </div>
                     </div>
                 </div>
