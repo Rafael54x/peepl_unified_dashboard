@@ -25,6 +25,7 @@
     
     .recruitment-dashboard .badge {
         font-size: 0.6rem !important;
+        border-radius: 10%;
     }
 }
 

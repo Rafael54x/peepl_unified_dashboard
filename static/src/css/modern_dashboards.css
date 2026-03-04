@@ -1,0 +1,240 @@
+/* ================================
+   RECRUITMENT DASHBOARD MODERN STYLES
+   ================================ */
+
+/* Base Container */
+.peepl-unified-dashboard {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-unified-dashboard {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+}
+
+/* ================================
+   RECRUITMENT DASHBOARD
+   ================================ */
+
+.recruitment-dashboard {
+    background: transparent;
+}
+
+.peepl-recruitment-card-header {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    border: none;
+    border-radius: 1rem 1rem 0 0;
+}
+
+/* Card UI Styling - No Color Override */
+.recruitment-dashboard .card {
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.recruitment-dashboard .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(99, 102, 241, 0.15);
+}
+
+.recruitment-dashboard .card-header {
+    border-bottom: 2px solid #e2e8f0;
+    padding: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .card-header {
+        border-bottom-color: #334155;
+    }
+}
+
+.recruitment-dashboard .card-header h5 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.recruitment-dashboard .card-body {
+    padding: 2rem;
+}
+
+/* Stats Cards UI */
+.recruitment-dashboard .card.text-white {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+    transition: all 0.3s ease;
+}
+
+.recruitment-dashboard .card.text-white:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.recruitment-dashboard .card.text-white h4 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.recruitment-dashboard .card.text-white p {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+/* Table Styles */
+.recruitment-dashboard .table {
+    background: transparent;
+}
+
+.recruitment-dashboard .table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.recruitment-dashboard .table thead th {
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.recruitment-dashboard .table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .table tbody tr {
+        border-bottom-color: #334155;
+    }
+}
+
+.recruitment-dashboard .table tbody tr:hover {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .table tbody tr:hover {
+        background: rgba(99, 102, 241, 0.1);
+    }
+}
+
+.recruitment-dashboard .table tbody td {
+    padding: 1rem;
+    border: none;
+}
+
+/* Form Controls */
+.recruitment-dashboard .form-control,
+.recruitment-dashboard .form-select {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .form-control,
+    .recruitment-dashboard .form-select {
+        background: rgba(30, 41, 59, 0.95);
+        border-color: #334155;
+    }
+}
+
+.recruitment-dashboard .form-control:focus,
+.recruitment-dashboard .form-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    outline: none;
+}
+
+/* Buttons */
+.recruitment-dashboard .btn {
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.recruitment-dashboard .btn-outline-danger {
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.recruitment-dashboard .btn-outline-danger:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.recruitment-dashboard .btn-outline-secondary {
+    border-color: #e2e8f0;
+    color: #64748b;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .btn-outline-secondary {
+        border-color: #334155;
+        color: #cbd5e1;
+    }
+}
+
+.recruitment-dashboard .btn-outline-secondary:hover {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: white;
+}
+
+/* Pagination */
+.recruitment-dashboard .pagination {
+    gap: 0.5rem;
+}
+
+.recruitment-dashboard .page-link {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .page-link {
+        border-color: #334155;
+        color: #818cf8;
+        background: transparent;
+    }
+}
+
+.recruitment-dashboard .page-link:hover {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: white;
+}
+
+.recruitment-dashboard .page-link.active {
+    background: #6366f1;
+    border-color: #6366f1;
+}
+
+/* Spinner */
+.recruitment-dashboard .spinner-border {
+    color: #6366f1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .recruitment-dashboard .card-body {
+        padding: 1rem;
+    }
+
+    .recruitment-dashboard .table {
+        font-size: 0.8rem;
+    }
+}
