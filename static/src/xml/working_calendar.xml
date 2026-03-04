@@ -63,7 +63,7 @@
                                             <div class="peepl-mini-days">
                                                 <t t-foreach="monthItem.calendarDays" t-as="day" t-key="day.uniqueKey">
                                                     <div t-if="day.empty" class="peepl-mini-day empty"/>
-                                                    <div t-else="" t-attf-class="peepl-mini-day {{day.isHoliday ? 'holiday' : ''}}" t-attf-title="{{day.isHoliday ? day.holidays.join(', ') : ''}}">
+                                                    <div t-else="" t-attf-class="peepl-mini-day {{day.isHoliday ? 'holiday' : ''}} {{day.isTimeOff ? 'timeoff' : ''}}" t-attf-title="{{day.isHoliday ? day.holidays.join(', ') : day.timeOffType || ''}}">
                                                         <span t-esc="day.day"/>
                                                     </div>
                                                 </t>
@@ -100,8 +100,8 @@
                             <div class="peepl-calendar-days">
                                 <t t-if="state.calendarDays and state.calendarDays.length > 0" t-foreach="state.calendarDays" t-as="dayItem" t-key="dayItem.uniqueKey">
                                     <div t-if="dayItem.empty" class="peepl-calendar-day empty"/>
-                                    <div t-else="" t-attf-class="peepl-calendar-day {{dayItem.isHoliday ? 'holiday' : ''}}" t-attf-data-date="{{dayItem.date}}">
-                                        <div class="peepl-day-number" t-esc="dayItem.day"/>
+                                    <div t-else="" t-attf-class="peepl-calendar-day {{dayItem.isHoliday ? 'holiday' : ''}} {{dayItem.isTimeOff ? 'timeoff' : ''}}" t-attf-data-date="{{dayItem.date}}" t-attf-title="{{dayItem.timeOffType || ''}}">
+                                        <div class="peepl-day-number" t-attf-class="{{dayItem.isTimeOff ? 'timeoff-text' : ''}}" t-esc="dayItem.day"/>
                                         <div t-if="dayItem.isHoliday" class="peepl-holiday-info">
                                             <t t-foreach="dayItem.holidays" t-as="holiday" t-key="holiday">
                                                 <div class="peepl-holiday-badge">
@@ -118,6 +118,16 @@
                 </div>
 
                 <div class="peepl-calendar-legend">
+                    <div class="peepl-legend-stats">
+                        <div class="peepl-stat-item">
+                            <span class="peepl-stat-label">Total Holidays:</span>
+                            <span class="peepl-stat-value" t-esc="state.totalHolidays"/>
+                        </div>
+                        <div class="peepl-stat-item">
+                            <span class="peepl-stat-label">Total Time Offs:</span>
+                            <span class="peepl-stat-value" t-esc="state.totalTimeOffs"/>
+                        </div>
+                    </div>
                     <t t-foreach="state.holidayTypes" t-as="holidayType" t-key="holidayType_index">
                         <div class="peepl-legend-item">
                             <div class="peepl-legend-badge peepl-legend-holiday">

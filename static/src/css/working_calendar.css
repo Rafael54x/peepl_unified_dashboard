@@ -364,10 +364,19 @@
     font-weight: 700;
 }
 
+.peepl-hr-dashboard .peepl-mini-day.timeoff {
+    color: #991b1b;
+    font-weight: 700;
+}
+
 @media (prefers-color-scheme: dark) {
     .peepl-hr-dashboard .peepl-mini-day.holiday {
         background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
         border-color: #dc2626;
+        color: #fca5a5;
+    }
+    
+    .peepl-hr-dashboard .peepl-mini-day.timeoff {
         color: #fca5a5;
     }
 }
@@ -523,18 +532,13 @@
     }
 }
 
-.peepl-hr-dashboard .peepl-day-number {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 0;
-    flex-shrink: 0;
-    line-height: 1.4;
+.peepl-hr-dashboard .peepl-day-number.timeoff-text {
+    color: #dc2626;
 }
 
 @media (prefers-color-scheme: dark) {
-    .peepl-hr-dashboard .peepl-day-number {
-        color: #f1f5f9;
+    .peepl-hr-dashboard .peepl-day-number.timeoff-text {
+        color: #fca5a5;
     }
 }
 
@@ -628,6 +632,42 @@
     padding: 1.5rem;
     border-top: 1px solid #f1f5f9;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.peepl-hr-dashboard .peepl-legend-stats {
+    display: flex;
+    gap: 2rem;
+    padding-right: 2rem;
+    border-right: 1px solid #e2e8f0;
+}
+
+.peepl-hr-dashboard .peepl-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.peepl-hr-dashboard .peepl-stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.peepl-hr-dashboard .peepl-stat-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #6366f1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-legend-stats {
+        border-right-color: #334155;
+    }
+    
+    .peepl-hr-dashboard .peepl-stat-label {
+        color: #cbd5e1;
+    }
 }
 
 @media (prefers-color-scheme: dark) {

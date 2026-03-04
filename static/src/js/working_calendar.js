@@ -2,6 +2,7 @@
 
 import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { session } from "@web/session";
 
 class WorkingCalendar extends Component {
     static template = "peepl_unified_dashboard.WorkingCalendar";
@@ -15,7 +16,9 @@ class WorkingCalendar extends Component {
             calendarDays: [],
             viewMode: 'year',
             holidayTypes: [],
-            isHRDashboardAllAccess: false
+            isHRDashboardAllAccess: false,
+            totalHolidays: 0,
+            totalTimeOffs: 0
         });
 
         this.checkUserRole();
@@ -37,14 +40,12 @@ class WorkingCalendar extends Component {
         this.actionService.doAction(264);
     }
 
-
     async loadHolidayTypes() {
         this.state.holidayTypes = await this.orm.searchRead(
             'resource.calendar.leaves',
             [['holiday_type_id', '!=', false]],
             ['holiday_type_id']
         );
-        // Extract unique holiday types
         const uniqueTypes = new Map();
         this.state.holidayTypes.forEach(leave => {
             if (leave.holiday_type_id) {
@@ -62,6 +63,25 @@ class WorkingCalendar extends Component {
         }
     }
 
+    async getTimeOffs() {
+        const fullName = session.partner_display_name || session.name || 'User';
+        const userName = fullName.includes(',') ? fullName.split(',').pop().trim() : fullName;
+        console.log('Current User Name:', userName);
+        
+        const allTimeOffs = await this.orm.searchRead(
+            'hr.leave',
+            [],
+            ['employee_id', 'date_from', 'date_to', 'holiday_status_id']
+        );
+        
+        const filteredTimeOffs = allTimeOffs.filter(leave => {
+            return leave.employee_id && leave.employee_id[1] === userName;
+        });
+        
+        console.log('Filtered Time Offs for', userName, ':', filteredTimeOffs);
+        return filteredTimeOffs;
+    }
+
     async loadYearView() {
         const startStr = `${this.state.selectedYear}-01-01`;
         const endStr = `${this.state.selectedYear}-12-31`;
@@ -77,6 +97,56 @@ class WorkingCalendar extends Component {
             ['name', 'date_from', 'date_to']
         );
 
+        const timeOffs = await this.getTimeOffs();
+
+        let totalHolidayDays = 0;
+        let totalTimeOffDays = 0;
+        const holidayDatesSet = new Set();
+        const timeOffDatesSet = new Set();
+
+        leaves.forEach(leave => {
+            const fromUTC = new Date(leave.date_from + 'Z');
+            const toUTC = new Date(leave.date_to + 'Z');
+            const currentDate = new Date(fromUTC);
+            currentDate.setHours(0, 0, 0, 0);
+            const endDate = new Date(toUTC);
+            endDate.setHours(0, 0, 0, 0);
+            
+            while (currentDate <= endDate) {
+                if (currentDate.getFullYear() === this.state.selectedYear) {
+                    const dateStr = currentDate.toISOString().split('T')[0];
+                    if (!holidayDatesSet.has(dateStr)) {
+                        holidayDatesSet.add(dateStr);
+                        totalHolidayDays++;
+                    }
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        });
+
+        timeOffs.forEach(timeOff => {
+            const fromUTC = new Date(timeOff.date_from + 'Z');
+            const toUTC = new Date(timeOff.date_to + 'Z');
+            const currentDate = new Date(fromUTC);
+            currentDate.setHours(0, 0, 0, 0);
+            const endDate = new Date(toUTC);
+            endDate.setHours(0, 0, 0, 0);
+            
+            while (currentDate <= endDate) {
+                if (currentDate.getFullYear() === this.state.selectedYear) {
+                    const dateStr = currentDate.toISOString().split('T')[0];
+                    if (!timeOffDatesSet.has(dateStr)) {
+                        timeOffDatesSet.add(dateStr);
+                        totalTimeOffDays++;
+                    }
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        });
+
+        this.state.totalHolidays = totalHolidayDays;
+        this.state.totalTimeOffs = totalTimeOffDays;
+
         const monthData = [];
         for (let month = 0; month < 12; month++) {
             const monthStart = new Date(this.state.selectedYear, month, 1);
@@ -84,7 +154,8 @@ class WorkingCalendar extends Component {
             const daysInMonth = monthEnd.getDate();
             
             let holidayCount = 0;
-            const holidayDates = {}; // Change to object to store holiday names
+            const holidayDates = {};
+            const timeOffDates = {};
             
             leaves.forEach(leave => {
                 const fromUTC = new Date(leave.date_from + 'Z');
@@ -109,12 +180,32 @@ class WorkingCalendar extends Component {
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
             });
+
+            timeOffs.forEach(timeOff => {
+                const fromUTC = new Date(timeOff.date_from + 'Z');
+                const toUTC = new Date(timeOff.date_to + 'Z');
+                
+                const currentDate = new Date(fromUTC);
+                currentDate.setHours(0, 0, 0, 0);
+                const endDate = new Date(toUTC);
+                endDate.setHours(0, 0, 0, 0);
+                
+                const timeOffType = timeOff.holiday_status_id ? timeOff.holiday_status_id[1] : 'Time Off';
+                
+                while (currentDate <= endDate) {
+                    if (currentDate.getMonth() === month && currentDate.getFullYear() === this.state.selectedYear) {
+                        const day = currentDate.getDate();
+                        if (!timeOffDates[day]) {
+                            timeOffDates[day] = timeOffType;
+                        }
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            });
             
-            // Generate calendar days untuk bulan ini
             const firstDay = monthStart.getDay();
             const calendarDays = [];
             
-            // Empty cells sebelum hari pertama
             for (let i = 0; i < firstDay; i++) {
                 calendarDays.push({ 
                     empty: true, 
@@ -123,14 +214,17 @@ class WorkingCalendar extends Component {
                 });
             }
             
-            // Hari-hari dalam bulan
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayHolidays = holidayDates[day] || [];
                 const isHoliday = dayHolidays.length > 0;
+                const isTimeOff = timeOffDates[day] ? true : false;
+                const timeOffType = timeOffDates[day] || '';
                 calendarDays.push({
                     empty: false,
                     day: day,
                     isHoliday: isHoliday,
+                    isTimeOff: isTimeOff,
+                    timeOffType: timeOffType,
                     holidays: dayHolidays,
                     uniqueKey: `day-${month}-${day}`
                 });
@@ -168,7 +262,11 @@ class WorkingCalendar extends Component {
             ['name', 'date_from', 'date_to']
         );
 
+        const timeOffs = await this.getTimeOffs();
+
         const leaveDates = {};
+        const timeOffDates = {};
+        
         leaves.forEach(leave => {
             const fromUTC = new Date(leave.date_from + 'Z');
             const toUTC = new Date(leave.date_to + 'Z');
@@ -179,6 +277,22 @@ class WorkingCalendar extends Component {
                 if (!leaveDates[dateStr]) leaveDates[dateStr] = [];
                 if (!leaveDates[dateStr].includes(leave.name)) {
                     leaveDates[dateStr].push(leave.name);
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        });
+
+        timeOffs.forEach(timeOff => {
+            const fromUTC = new Date(timeOff.date_from + 'Z');
+            const toUTC = new Date(timeOff.date_to + 'Z');
+            
+            const currentDate = new Date(fromUTC);
+            const timeOffType = timeOff.holiday_status_id ? timeOff.holiday_status_id[1] : 'Time Off';
+            
+            while (currentDate <= toUTC) {
+                const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+                if (!timeOffDates[dateStr]) {
+                    timeOffDates[dateStr] = timeOffType;
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
             }
@@ -195,11 +309,15 @@ class WorkingCalendar extends Component {
         for (let day = 1; day <= endDate.getDate(); day++) {
             const dateStr = `${this.state.selectedYear}-${String(this.state.selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const holidays = leaveDates[dateStr] || [];
+            const isTimeOff = timeOffDates[dateStr] ? true : false;
+            const timeOffType = timeOffDates[dateStr] || '';
             calendarDays.push({ 
                 day, 
                 date: dateStr,
                 uniqueKey: dateStr,
                 isHoliday: holidays.length > 0,
+                isTimeOff: isTimeOff,
+                timeOffType: timeOffType,
                 holidays: holidays
             });
         }
@@ -241,14 +359,12 @@ class WorkingCalendar extends Component {
     selectMonth(month) {
         this.state.selectedMonth = month;
         this.state.viewMode = 'month';
-        // Clear calendarDays before loading to avoid stale data
         this.state.calendarDays = [];
         this.loadMonthView();
     }
 
     backToYear() {
         this.state.viewMode = 'year';
-        // Clear calendarDays before loading to avoid stale data
         this.state.calendarDays = [];
         this.loadYearView();
     }
