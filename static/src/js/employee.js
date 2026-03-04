@@ -146,8 +146,10 @@ class Employee extends Component {
             type: 'ir.actions.act_window',
             res_model: 'hr.employee',
             res_id: employeeId,
+            view_mode: 'form',
             views: [[false, 'form']],
-            target: 'current'
+            target: 'current',
+            context: { 'form_view_ref': 'peepl_unified_dashboard.view_employee_form_readonly', 'readonly': true }
         });
     }
 }

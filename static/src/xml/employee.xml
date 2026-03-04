@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="peepl_unified_dashboard.Employee">
-        <div class="peepl-dashboard-container">
+        <div class="peepl-dashboard-container" style="margin-bottom: 40px;">
             <div class="peepl-employee-page">
                 <!-- Header Section -->
                 <div class="peepl-employee-header">
