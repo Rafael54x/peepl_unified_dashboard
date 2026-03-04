@@ -89,7 +89,7 @@ class Employee extends Component {
             department: emp.department_id ? emp.department_id[1] : '-',
             departmentId: emp.department_id ? emp.department_id[0] : null,
             jobTitle: emp.job_title || '-',
-            image: emp.image_1920 ? `data:image/jpeg;base64,${emp.image_1920}` : null,
+            image: (emp.image_1920 && emp.image_1920 !== false) ? `data:image/jpeg;base64,${emp.image_1920}` : null,
             initials: this.getInitials(emp.name)
         }));
 

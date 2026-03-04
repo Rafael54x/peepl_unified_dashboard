@@ -9,9 +9,13 @@
                 </div>
             </div>
             <div t-else="" class="container-fluid p-4" style="padding-bottom: 100px;">
+                <div class="mb-4">
+                    <h1 class="fs-3 fw-bold mb-1">Recruitment Dashboard</h1>
+                    <p class="text-muted mb-0">Manage and track all recruitment activities</p>
+                </div>
                 <div class="row mb-4">
                     <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
-                        <div class="card text-white rounded-3" style="background-color: #74c0fc;">
+                        <div class="card text-white rounded-6" style="background-color: #74c0fc;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -26,7 +30,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
-                        <div class="card text-white rounded-3" style="background-color: #8ce99a;">
+                        <div class="card text-white rounded-6" style="background-color: #8ce99a;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -41,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
-                        <div class="card text-white rounded-3" style="background-color: #ffd43b;">
+                        <div class="card text-white rounded-6" style="background-color: #ffd43b;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -56,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <div class="card text-white rounded-3" style="background-color: #ff8787;">
+                        <div class="card text-white rounded-6" style="background-color: #ff8787;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -71,19 +75,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-4">
+                <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <div class="card">
-                            <div class="card-header peepl-recruitment-card-header">
-                                <h5 class="mb-0">Recruitment Phases</h5>
+                        <div class="card border-0 shadow-sm" style="border-radius: 16px; overflow: hidden;">
+                            <div class="card-header peepl-recruitment-card-header py-4 px-4">
+                                <h5 class="fw-bold mb-0">Recruitment Phases</h5>
                             </div>
-                            <div class="card-body text-center" style="height: 450px; position: relative; padding: 20px;">
-                                <div class="chart-container">
+                            <div class="card-body p-4">
+                                <div style="height: 300px; position: relative;">
                                     <canvas t-ref="phaseChart"/>
                                 </div>
-                                <div class="mt-3">
+                                <div class="mt-3 d-flex flex-wrap gap-2 justify-content-center">
                                     <t t-foreach="state.phaseData" t-as="phase" t-key="phase.name">
-                                        <span class="badge badge-primary me-2 mb-1" t-att-style="'background-color: ' + this.getPhaseColor(phase_index) + '; color: white;'">
+                                        <span class="badge" t-att-style="'background-color: ' + this.getPhaseColor(phase_index) + '; color: white; padding: 0.5rem 0.75rem;'">
                                             <t t-esc="phase.name"/>: <t t-esc="phase.count"/>
                                         </span>
                                     </t>
@@ -92,17 +96,17 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header peepl-recruitment-card-header">
-                                <h5 class="mb-0">Recruitment Status</h5>
+                        <div class="card border-0 shadow-sm" style="border-radius: 16px; overflow: hidden;">
+                            <div class="card-header peepl-recruitment-card-header py-4 px-4">
+                                <h5 class="fw-bold mb-0">Recruitment Status</h5>
                             </div>
-                            <div class="card-body text-center" style="height: 450px; position: relative; padding: 20px;">
-                                <div class="chart-container">
+                            <div class="card-body p-4">
+                                <div style="height: 300px; position: relative;">
                                     <canvas t-ref="statusChart"/>
                                 </div>
-                                <div class="mt-3">
+                                <div class="mt-3 d-flex flex-wrap gap-2 justify-content-center">
                                     <t t-foreach="state.statusData" t-as="status" t-key="status.name">
-                                        <span class="badge badge-secondary me-2 mb-1" t-att-style="'background-color: ' + this.getStatusColor(status_index) + '; color: white;'">
+                                        <span class="badge" t-att-style="'background-color: ' + this.getStatusColor(status_index) + '; color: white; padding: 0.5rem 0.75rem;'">
                                             <t t-esc="status.name"/>: <t t-esc="status.count"/>
                                         </span>
                                     </t>
@@ -113,104 +117,98 @@
                 </div>
                 <div class="row" style="margin-bottom: 50px;">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                    <h5 class="mb-0">All Candidates</h5>
-                                    <div class="d-flex gap-2 flex-wrap mt-2 mt-md-0">
-                                        <button t-if="this.hasActiveFilters()" class="btn btn-sm btn-outline-danger" t-on-click="clearAllFilters">
-                                            <i class="fa fa-times"/> Clear Filters
-                                        </button>
-                                        <input type="text" class="form-control" placeholder="Search by Name or Email..." style="width: 250px;" t-model="state.searchText" t-on-input="onSearchInput"/>
-                                        <select class="form-control" style="width: 150px;" t-model="state.filters.month" t-on-change="onMonthFilterChange">
-                                            <option value="all">All Months</option>
-                                            <t t-foreach="this.getAvailableMonths()" t-as="month" t-key="month">
-                                                <option t-att-value="month" t-esc="this.getMonthName(month)"/>
-                                            </t>
-                                        </select>
-                                        <select class="form-control" style="width: 150px;" t-model="state.filters.phase" t-on-change="onPhaseFilterChange">
-                                            <option value="all">All Phases</option>
-                                            <t t-foreach="state.phaseData" t-as="phase" t-key="phase.name">
-                                                <option t-att-value="this.getPhaseIdByName(phase.name)" t-esc="phase.name"/>
-                                            </t>
-                                        </select>
-                                        <select class="form-control" style="width: 150px;" t-model="state.filters.decision" t-on-change="onDecisionFilterChange">
-                                            <option value="all">All Status</option>
-                                            <option value="on_progress">On Progress</option>
-                                            <option value="recommended">Recommended</option>
-                                            <option value="offer_made">Offer Made</option>
-                                            <option value="do_not_pursue">Do Not Pursue</option>
-                                        </select>
-                                        <select class="form-control" style="width: 100px;" t-model="state.pagination.itemsPerPage" t-on-change="onItemsPerPageChange">
-                                            <option value="10">10 rows</option>
-                                            <option value="20">20 rows</option>
-                                            <option value="50">50 rows</option>
-                                            <option value="100">100 rows</option>
-                                        </select>
-                                    </div>
+                        <div class="card shadow-sm" style="border-radius: 16px; overflow: hidden;">
+                            <div class="card-header bg-white py-4 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <h5 class="fw-bold mb-0">All Candidates</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button t-if="this.hasActiveFilters()" class="btn btn-sm btn-outline-danger" t-on-click="clearAllFilters">
+                                        <i class="fa fa-times"/> Clear Filters
+                                    </button>
+                                    <input type="text" class="form-control" placeholder="Search by Name or Email..." style="width: 250px;" t-model="state.searchText" t-on-input="onSearchInput"/>
+                                    <select class="form-select" style="width: 150px;" t-model="state.filters.month" t-on-change="onMonthFilterChange">
+                                        <option value="all">All Months</option>
+                                        <t t-foreach="this.getAvailableMonths()" t-as="month" t-key="month">
+                                            <option t-att-value="month" t-esc="this.getMonthName(month)"/>
+                                        </t>
+                                    </select>
+                                    <select class="form-select" style="width: 150px;" t-model="state.filters.phase" t-on-change="onPhaseFilterChange">
+                                        <option value="all">All Phases</option>
+                                        <t t-foreach="state.phaseData" t-as="phase" t-key="phase.name">
+                                            <option t-att-value="this.getPhaseIdByName(phase.name)" t-esc="phase.name"/>
+                                        </t>
+                                    </select>
+                                    <select class="form-select" style="width: 150px;" t-model="state.filters.decision" t-on-change="onDecisionFilterChange">
+                                        <option value="all">All Status</option>
+                                        <option value="on_progress">On Progress</option>
+                                        <option value="recommended">Recommended</option>
+                                        <option value="offer_made">Offer Made</option>
+                                        <option value="do_not_pursue">Do Not Pursue</option>
+                                    </select>
+                                    <select class="form-select" style="width: 100px;" t-model="state.pagination.itemsPerPage" t-on-change="onItemsPerPageChange">
+                                        <option value="10">10 rows</option>
+                                        <option value="20">20 rows</option>
+                                        <option value="50">50 rows</option>
+                                        <option value="100">100 rows</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table table-hover" style="margin-bottom: 0; font-size: 0.85rem;">
-                                        <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                            <tr>
-                                                <th style="border: none; padding: 10px; cursor: pointer;" t-on-click="sortByName">Name ↕</th>
-                                                <th style="border: none; padding: 10px;">Email</th>
-                                                <th style="border: none; padding: 10px;">Job</th>
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none; cursor: pointer;" t-on-click="sortByName">Name ↕</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Email</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Job</th>
                                                 <t t-foreach="state.customFields" t-as="field" t-key="field.id">
-                                                    <th style="border: none; padding: 10px;" t-esc="field.name"/>
+                                                    <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;" t-esc="field.name"/>
                                                 </t>
-                                                <th style="border: none; padding: 10px;">Date of Online Test</th>
-                                                <th style="border: none; padding: 10px;">Phase</th>
-                                                <th style="border: none; padding: 10px;">Status</th>
-                                                <th style="border: none; padding: 10px;">Notes</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Date of Online Test</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Phase</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Status</th>
+                                                <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Notes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <t t-foreach="this.getPaginatedCandidates()" t-as="candidate" t-key="candidate.id">
-                                                <tr style="transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#f8f9ff'" onmouseout="this.style.backgroundColor='transparent'">
-                                                    <td style="padding: 8px; border: none;" t-esc="candidate.partner_name"/>
-                                                    <td style="padding: 8px; border: none;" t-esc="candidate.email_from"/>
-                                                    <td style="padding: 8px; border: none;" t-esc="candidate.job_id[1]"/>
+                                                <tr style="transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='rgba(99, 102, 241, 0.03)'" onmouseout="this.style.backgroundColor='transparent'">
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="candidate.partner_name"/>
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="candidate.email_from"/>
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="candidate.job_id[1]"/>
                                                     <t t-foreach="state.customFields" t-as="field" t-key="field.id">
-                                                        <td style="padding: 8px; border: none;" t-esc="candidate['x_field' + field.id + '_value'] || '-'"/>
+                                                        <td class="px-4 py-3" style="border: none;" t-esc="candidate['x_field' + field.id + '_value'] || '-'"/>
                                                     </t>
-                                                    <td style="padding: 8px; border: none;" t-esc="this.formatDate(candidate.last_test)"/>
-                                                    <td style="padding: 8px; border: none; font-size: 0.75rem;" t-esc="this.getStageName(candidate.stage_id)"/>
-                                                    <td style="padding: 8px; border: none;">
-                                                        <span t-att-class="'badge ' + this.getStatusBadgeClass(candidate.hire_decision)" style="border-radius: 4px; padding: 2px 6px; font-size: 0.7rem;" t-esc="this.getDecisionName(candidate.hire_decision)"/>
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="this.formatDate(candidate.last_test)"/>
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="this.getStageName(candidate.stage_id)"/>
+                                                    <td class="px-4 py-3" style="border: none;">
+                                                        <span t-att-class="'badge ' + this.getStatusBadgeClass(candidate.hire_decision)" style="border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 0.85rem; font-weight: 600;" t-esc="this.getDecisionName(candidate.hire_decision)"/>
                                                     </td>
-                                                    <td style="padding: 8px; border: none;" t-esc="this.formatNotes(candidate.applicant_notes)"/>
+                                                    <td class="px-4 py-3" style="border: none;" t-esc="this.formatNotes(candidate.applicant_notes)"/>
                                                 </tr>
                                             </t>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div>
-                                        <span>
-                                            Showing <t t-esc="(state.pagination.currentPage - 1) * state.pagination.itemsPerPage + 1"/> to <t t-esc="state.pagination.currentPage * state.pagination.itemsPerPage > state.pagination.totalItems ? state.pagination.totalItems : state.pagination.currentPage * state.pagination.itemsPerPage"/> of <t t-esc="state.pagination.totalItems"/> entries
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <nav>
-                                            <ul class="pagination mb-0">
-                                                <li t-att-class="'page-item ' + (state.pagination.currentPage === 1 ? 'disabled' : '')">
-                                                    <button class="page-link" t-on-click="goToPreviousPage" t-att-disabled="state.pagination.currentPage === 1">Previous</button>
-                                                </li>
-                                                <t t-foreach="this.getPageNumbers()" t-as="page" t-key="page">
-                                                    <li t-att-class="'page-item ' + (state.pagination.currentPage === page ? 'active' : '')">
-                                                        <button class="page-link" t-on-click="goToPage" t-att-data-page="page" t-esc="page"/>
-                                                    </li>
-                                                </t>
-                                                <li t-att-class="'page-item ' + (state.pagination.currentPage === this.getTotalPages() ? 'disabled' : '')">
-                                                    <button class="page-link" t-on-click="goToNextPage" t-att-disabled="state.pagination.currentPage === this.getTotalPages()">Next</button>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center" style="border-top: 1px solid #f0f0f0;">
+                                <div class="text-muted" style="font-size: 14px;">
+                                    Showing <t t-esc="(state.pagination.currentPage - 1) * state.pagination.itemsPerPage + 1"/> to <t t-esc="state.pagination.currentPage * state.pagination.itemsPerPage > state.pagination.totalItems ? state.pagination.totalItems : state.pagination.currentPage * state.pagination.itemsPerPage"/> of <t t-esc="state.pagination.totalItems"/> entries
                                 </div>
+                                <nav>
+                                    <ul class="pagination mb-0">
+                                        <li t-att-class="'page-item ' + (state.pagination.currentPage === 1 ? 'disabled' : '')">
+                                            <button class="page-link" t-on-click="goToPreviousPage" t-att-disabled="state.pagination.currentPage === 1">Previous</button>
+                                        </li>
+                                        <t t-foreach="this.getPageNumbers()" t-as="page" t-key="page">
+                                            <li t-att-class="'page-item ' + (state.pagination.currentPage === page ? 'active' : '')">
+                                                <button class="page-link" t-on-click="goToPage" t-att-data-page="page" t-esc="page"/>
+                                            </li>
+                                        </t>
+                                        <li t-att-class="'page-item ' + (state.pagination.currentPage === this.getTotalPages() ? 'disabled' : '')">
+                                            <button class="page-link" t-on-click="goToNextPage" t-att-disabled="state.pagination.currentPage === this.getTotalPages()">Next</button>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>

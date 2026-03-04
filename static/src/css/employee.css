@@ -121,7 +121,7 @@
 }
 
 .peepl-hr-dashboard .peepl-filter-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.75rem;
     border: 2px solid #e2e8f0;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 0.75rem;
@@ -129,7 +129,7 @@
     font-weight: 600;
     color: #64748b;
     transition: all 0.3s ease;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -269,15 +269,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 800;
     margin: 0 auto;
     transition: all 0.3s ease;
+    border: 3px solid #e2e8f0;
+    letter-spacing: 0.05em;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-avatar-placeholder {
+        border-color: #475569;
+    }
 }
 
 .peepl-hr-dashboard .peepl-employee-card:hover .peepl-employee-avatar-placeholder {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    border-color: #6366f1;
 }
 
 .peepl-hr-dashboard .peepl-employee-status {

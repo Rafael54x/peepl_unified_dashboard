@@ -250,7 +250,7 @@
         left: 0;
         right: 0;
         height: 60px;
-        background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        background: #051847;
         z-index: 1000;
         display: flex;
         justify-content: space-between;
@@ -261,7 +261,7 @@
     
     @media (prefers-color-scheme: dark) {
         .peepl-hr-dashboard .peepl-mobile-navbar {
-            background: linear-gradient(90deg, #4338ca 0%, #6d28d9 100%);
+            background: #051847;
         }
     }
     

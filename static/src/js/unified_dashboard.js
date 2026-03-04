@@ -18,9 +18,14 @@ class UnifiedDashboard extends Component {
     setup() {
         this.orm = useService("orm");
         this.weeklyReportSetView = null;
+        
+        const isFromMenu = this.props.action?.context?.reset_to_default;
+        const savedMenu = localStorage.getItem('peepl_active_menu');
+        const initialMenu = isFromMenu ? 'my_dashboard' : (savedMenu || 'my_dashboard');
+        
         this.state = useState({
             sidebarOpen: true,
-            activeMenu: 'my_dashboard',
+            activeMenu: initialMenu,
             hasWeeklyReportAccess: false,
             hasRecruitmentAccess: false,
             hasAttendanceAccess: false,
@@ -28,9 +33,18 @@ class UnifiedDashboard extends Component {
             weeklyView: 'dashboard'
         });
 
+        if (isFromMenu) {
+            localStorage.setItem('peepl_active_menu', 'my_dashboard');
+        }
+
         onWillStart(async () => {
             await this.checkAccess();
         });
+    }
+
+    getInitialMenu() {
+        const savedMenu = localStorage.getItem('peepl_active_menu');
+        return savedMenu || 'my_dashboard';
     }
 
     async checkAccess() {
@@ -62,6 +76,7 @@ class UnifiedDashboard extends Component {
 
     setActiveMenu(menu) {
         this.state.activeMenu = menu;
+        localStorage.setItem('peepl_active_menu', menu);
     }
 
     toggleWeeklyDropdown() {

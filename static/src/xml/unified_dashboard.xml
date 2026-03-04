@@ -50,7 +50,7 @@
                         </div>
                     </div> -->
                     <button t-if="state.hasRecruitmentAccess" class="peepl-menu-item" t-att-class="state.activeMenu === 'recruitment' ? 'active' : ''" t-on-click="() => this.setActiveMenu('recruitment')">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-user-plus"></i>
                         <span>Recruitment</span>
                     </button>
                     <button t-if="state.hasAttendanceAccess" class="peepl-menu-item" t-att-class="state.activeMenu === 'attendance' ? 'active' : ''" t-on-click="() => this.setActiveMenu('attendance')">

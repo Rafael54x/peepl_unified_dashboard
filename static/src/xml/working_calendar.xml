@@ -11,6 +11,9 @@
                         <div>
                             <h2 class="peepl-table-title">Working Calendar</h2>
                             <p class="peepl-table-subtitle">View public holidays for the year</p>
+                    <button t-if="state.isHRDashboardAllAccess" class="peepl-calendar-edit-btn" t-on-click="handleEditClick">
+                        <i class="fa fa-edit"/> Edit
+                    </button>
                         </div>
                     </div>
                     <div class="peepl-calendar-controls">
@@ -36,9 +39,6 @@
                             <i class="fa fa-arrow-left"/> Back to Year
                         </button>
                     </div>
-                    <button t-if="state.isHRDashboardAllAccess" class="peepl-calendar-edit-btn" t-on-click="handleEditClick">
-                        <i class="fa fa-edit"/> Edit
-                    </button>
                 </div>
 
                 <div class="peepl-working-calendar-grid">

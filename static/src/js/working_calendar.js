@@ -91,8 +91,12 @@ class WorkingCalendar extends Component {
                 const toUTC = new Date(leave.date_to + 'Z');
                 
                 const currentDate = new Date(fromUTC);
-                while (currentDate <= toUTC) {
-                    if (currentDate >= monthStart && currentDate <= monthEnd) {
+                currentDate.setHours(0, 0, 0, 0);
+                const endDate = new Date(toUTC);
+                endDate.setHours(0, 0, 0, 0);
+                
+                while (currentDate <= endDate) {
+                    if (currentDate.getMonth() === month && currentDate.getFullYear() === this.state.selectedYear) {
                         holidayCount++;
                         const day = currentDate.getDate();
                         if (!holidayDates[day]) {
