@@ -21,7 +21,8 @@ class Employee extends Component {
             searchQuery: '',
             filterDepartment: null,
             currentUserDepartment: null,
-            allDepartments: []
+            allDepartments: [],
+            selectedEmployee: null
         });
 
         this.initializeData();
@@ -151,6 +152,18 @@ class Employee extends Component {
             target: 'current',
             context: { 'form_view_ref': 'peepl_unified_dashboard.view_employee_form_readonly', 'readonly': true }
         });
+    }
+
+    openEmployeeModal(employee) {
+        if (this.state.isHRDashboardUserOnly) {
+            this.state.selectedEmployee = employee;
+        } else {
+            this.openEmployeeForm(employee.id);
+        }
+    }
+
+    closeEmployeeModal() {
+        this.state.selectedEmployee = null;
     }
 }
 

@@ -52,7 +52,7 @@
                 <!-- Employee Grid Section -->
                 <div class="peepl-employee-grid">
                     <t t-if="getFilteredEmployees().length > 0" t-foreach="getFilteredEmployees()" t-as="employee" t-key="employee.id">
-                        <div class="peepl-employee-card" t-on-click="() => this.openEmployeeForm(employee.id)" style="cursor: pointer;">
+                        <div class="peepl-employee-card" t-on-click="() => this.openEmployeeModal(employee)" style="cursor: pointer;">
                             <!-- Avatar Section -->
                             <div class="peepl-employee-card-header">
                                 <t t-if="employee.image">
@@ -92,6 +92,44 @@
                         </div>
                     </t>
                 </div>
+
+                <!-- Employee Modal -->
+                <t t-if="state.selectedEmployee">
+                    <div class="peepl-modal-overlay" t-on-click="() => this.closeEmployeeModal()">
+                        <div class="peepl-modal-content" t-on-click.stop="">
+                            <div class="peepl-modal-header">
+                                <h2>Employee Information</h2>
+                                <button class="peepl-modal-close" t-on-click="() => this.closeEmployeeModal()">
+                                    <i class="fa fa-times"/>
+                                </button>
+                            </div>
+                            <div class="peepl-modal-body">
+                                <div class="peepl-employee-info-grid">
+                                    <div class="peepl-info-item">
+                                        <label>Name</label>
+                                        <p t-esc="state.selectedEmployee.name"/>
+                                    </div>
+                                    <div class="peepl-info-item">
+                                        <label>Email</label>
+                                        <p t-esc="state.selectedEmployee.email"/>
+                                    </div>
+                                    <div class="peepl-info-item">
+                                        <label>Phone</label>
+                                        <p t-esc="state.selectedEmployee.phone"/>
+                                    </div>
+                                    <div class="peepl-info-item">
+                                        <label>Department</label>
+                                        <p t-esc="state.selectedEmployee.department"/>
+                                    </div>
+                                    <div class="peepl-info-item">
+                                        <label>Job Title</label>
+                                        <p t-esc="state.selectedEmployee.jobTitle"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
 
                 <!-- Stats Section -->
                 <div class="peepl-employee-stats">
