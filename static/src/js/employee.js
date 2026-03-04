@@ -24,8 +24,12 @@ class Employee extends Component {
             allDepartments: []
         });
 
-        this.checkUserRole();
-        this.loadEmployees();
+        this.initializeData();
+    }
+
+    async initializeData() {
+        await this.checkUserRole();
+        await this.loadEmployees();
     }
 
     async checkUserRole() {
@@ -34,19 +38,6 @@ class Employee extends Component {
             this.state.isHRDashboardUserOnly = result.isHRDashboardUserOnly || false;
             this.state.isHRDashboardManager = result.isHRDashboardManager || false;
             this.state.isHRDashboardAllAccess = result.isHRDashboardAllAccess || false;
-
-            // If manager, get current user's department
-            if (this.state.isHRDashboardManager) {
-                const currentEmployee = await this.orm.searchRead(
-                    'hr.employee',
-                    [['name', 'ilike', this.userName]],
-                    ['department_id'],
-                    { limit: 1 }
-                );
-                if (currentEmployee.length > 0 && currentEmployee[0].department_id) {
-                    this.state.currentUserDepartment = currentEmployee[0].department_id[0];
-                }
-            }
         } catch (error) {
             console.log('Could not check user role:', error);
         }
@@ -56,15 +47,31 @@ class Employee extends Component {
         let domain = [];
 
         if (this.state.isHRDashboardUserOnly) {
-            // User only sees themselves
-            domain = [['name', 'ilike', this.userName]];
+            const employees = await this.orm.searchRead(
+                'hr.employee',
+                [['name', 'ilike', this.userName]],
+                ['id'],
+                { limit: 1 }
+            );
+            if (employees.length > 0) {
+                domain = [['id', '=', employees[0].id]];
+            } else {
+                domain = [['id', '=', -1]];
+            }
         } else if (this.state.isHRDashboardManager) {
-            // Manager sees their department
-            if (this.state.currentUserDepartment) {
-                domain = [['department_id', '=', this.state.currentUserDepartment]];
+            const currentEmployee = await this.orm.searchRead(
+                'hr.employee',
+                [['name', 'ilike', this.userName]],
+                ['department_id'],
+                { limit: 1 }
+            );
+            if (currentEmployee.length > 0 && currentEmployee[0].department_id) {
+                const deptId = currentEmployee[0].department_id[0];
+                domain = [['department_id', '=', deptId]];
+            } else {
+                domain = [['id', '=', -1]];
             }
         }
-        // All access sees everyone (empty domain)
 
         const employees = await this.orm.searchRead(
             'hr.employee',
