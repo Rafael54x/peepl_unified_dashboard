@@ -1,0 +1,59 @@
+.chart-container {
+    height: 350px;
+    max-width: 350px;
+    margin: 0 auto;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+        max-width: 250px;
+    }
+    
+    .recruitment-dashboard .card-body {
+        padding: 10px !important;
+    }
+    
+    .recruitment-dashboard .table {
+        font-size: 0.7rem !important;
+    }
+    
+    .recruitment-dashboard .form-control {
+        font-size: 0.8rem;
+    }
+    
+    .recruitment-dashboard .badge {
+        font-size: 0.6rem !important;
+    }
+}
+
+
+.peepl-recruitment-card-header {
+    background: #262A36 !important;
+    color: #fff !important;
+}
+
+.peepl-recruitment-card-header h5 {
+    color: #fff !important;
+}
+
+.recruitment-dashboard .card-header {
+    background: white !important;
+    color: #262A36 !important;
+}
+
+.recruitment-dashboard .card-header h5 {
+    color: #262A36 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .recruitment-dashboard .card-header {
+        background: #262A36 !important;
+        color: #e0e0e0 !important;
+    }
+    
+    .recruitment-dashboard .card-header h5 {
+        color: #e0e0e0 !important;
+    }
+}

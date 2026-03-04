@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_payroll_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.payroll.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='payroll_information']" position="attributes">
+                <attribute name="groups">peepl_unified_dashboard.group_hr_dashboard_user</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

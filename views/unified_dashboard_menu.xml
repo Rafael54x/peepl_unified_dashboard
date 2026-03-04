@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="unified_dashboard_action" model="ir.actions.client">
+        <field name="name">HR Dashboard</field>
+        <field name="tag">peepl_unified_dashboard</field>
+    </record>
+
+    <menuitem id="menu_unified_dashboard_root"
+              name="Peepl - HR Dashboard"
+              web_icon="peepl_unified_dashboard,static/description/icon.png"
+              groups="group_hr_dashboard_user"
+              sequence="1"/>
+
+    <menuitem id="menu_unified_dashboard"
+              name="Dashboard"
+              parent="menu_unified_dashboard_root"
+              action="unified_dashboard_action"
+              groups="group_hr_dashboard_user"
+              sequence="1"/>
+</odoo>

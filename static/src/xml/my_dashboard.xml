@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="peepl_unified_dashboard.MyDashboard">
+        <div class="peepl-dashboard-container">
+            <t t-if="state.activePage === 'dashboard'">
+                <div class="peepl-dashboard-content">
+                    <div class="peepl-dashboard-header">
+                        <div>
+                            <p class="peepl-dashboard-subtitle">Today's Summary</p>
+                            <h1 class="peepl-dashboard-title">Welcome, <span class="peepl-text-gradient" t-esc="userName"/> 👋</h1>
+                        </div>
+                    </div>
+
+                    <div class="peepl-kpi-grid">
+                        <t t-foreach="kpiData" t-as="kpi" t-key="kpi.id">
+                            <div class="peepl-kpi-card" t-on-click="() => this.handleKpiClick(kpi)">
+                                <div class="peepl-kpi-card-header">
+                                    <div t-attf-class="peepl-kpi-icon-wrapper {{kpi.bgColor}}">
+                                        <i t-attf-class="fa {{kpi.icon}} {{kpi.color}}"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="peepl-kpi-title" t-esc="kpi.title"/>
+                                    <div class="peepl-kpi-value" t-esc="typeof kpi.value === 'function' ? kpi.value() : kpi.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="peepl-events-grid">
+                        <section class="peepl-event-card">
+                            <div class="peepl-event-header">
+                                <div class="peepl-event-header-left">
+                                    <div class="peepl-event-icon-wrapper peepl-bg-amber-50">
+                                        <i class="fa fa-birthday-cake peepl-text-amber-500"/>
+                                    </div>
+                                    <h3 class="peepl-event-title">Birthdays</h3>
+                                </div>
+                                <span class="peepl-event-badge" t-esc="state.birthdays.length + ' Employees'"/>
+                            </div>
+                            <div class="peepl-event-list">
+                                <t t-foreach="state.birthdays" t-as="person" t-key="person.id">
+                                    <div class="peepl-event-item">
+                                        <div class="peepl-avatar" t-esc="getInitials(person.name)"/>
+                                        <div class="peepl-event-item-content">
+                                            <h4 class="peepl-event-item-name" t-esc="person.name"/>
+                                            <p class="peepl-event-item-date" t-esc="person.date"/>
+                                        </div>
+                                        <span t-attf-class="peepl-days-badge {{person.daysLeft &lt; 0 ? 'peepl-days-badge-past' : ''}}" t-esc="person.daysText"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </section>
+
+                        <section class="peepl-event-card">
+                            <div class="peepl-event-header">
+                                <div class="peepl-event-header-left">
+                                    <div class="peepl-event-icon-wrapper peepl-bg-violet-50">
+                                        <i class="fa fa-trophy peepl-text-violet-500"/>
+                                    </div>
+                                    <h3 class="peepl-event-title">Work Anniversary</h3>
+                                </div>
+                                <span class="peepl-event-badge" t-esc="state.anniversaries.length + ' Employees'"/>
+                            </div>
+                            <div class="peepl-anniversary-list">
+                                <t t-foreach="state.anniversaries" t-as="person" t-key="person.id">
+                                    <div class="peepl-anniversary-card-highlight">
+                                        <div class="peepl-avatar-large" t-esc="getInitials(person.name)"/>
+                                        <div class="peepl-anniversary-content">
+                                            <div class="peepl-anniversary-years" t-esc="person.years + ' Years of Service'"/>
+                                            <h4 class="peepl-anniversary-name" t-esc="person.name"/>
+                                            <div class="peepl-anniversary-date">
+                                                <i class="fa fa-calendar-check-o"/>
+                                                <span t-esc="person.date"/>
+                                            </div>
+                                        </div>
+                                        <i class="fa fa-trophy peepl-anniversary-icon"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.activePage === 'calendar'">
+                <div class="peepl-table-view">
+                    <button class="peepl-back-button" t-on-click="backToDashboard">
+                        <i class="fa fa-arrow-left"/> Back to Dashboard
+                    </button>
+                    
+                    <div class="peepl-working-calendar">
+                        <div class="peepl-calendar-header">
+                            <div class="peepl-table-header-left">
+                                <div t-attf-class="peepl-table-icon {{state.selectedKpi?.bgColor}}">
+                                    <i t-attf-class="fa {{state.selectedKpi?.icon}} {{state.selectedKpi?.color}}"/>
+                                </div>
+                                <div>
+                                    <h2 class="peepl-table-title"><t t-esc="state.selectedKpi?.title"/> Calendar</h2>
+                                    <p class="peepl-table-subtitle">Select a date to view <t t-esc="state.selectedKpi?.title.toLowerCase()"/> details</p>
+                                </div>
+                            </div>
+                            <div class="peepl-month-selector">
+                                <button class="peepl-month-btn" t-on-click="() => this.changeMonth('prev')">
+                                    <i class="fa fa-chevron-left"/>
+                                </button>
+                                <span class="peepl-month-text" t-esc="getMonthName() + ' ' + state.selectedYear"/>
+                                <button class="peepl-month-btn" t-on-click="() => this.changeMonth('next')">
+                                    <i class="fa fa-chevron-right"/>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="peepl-working-calendar-grid">
+                            <div class="peepl-month-view peepl-month-enter">
+                                <div class="peepl-calendar-weekdays">
+                                    <div class="peepl-weekday">Sun</div>
+                                    <div class="peepl-weekday">Mon</div>
+                                    <div class="peepl-weekday">Tue</div>
+                                    <div class="peepl-weekday">Wed</div>
+                                    <div class="peepl-weekday">Thu</div>
+                                    <div class="peepl-weekday">Fri</div>
+                                    <div class="peepl-weekday">Sat</div>
+                                </div>
+                                
+                                <div class="peepl-calendar-days">
+                                    <t t-if="state.calendarDates and state.calendarDates.length > 0" t-foreach="state.calendarDates" t-as="dateItem" t-key="dateItem.empty ? dateItem_index : dateItem.date">
+                                        <div t-if="dateItem.empty" class="peepl-calendar-day empty"/>
+                                        <div t-else="" class="peepl-calendar-day" t-on-click="() => this.handleDateClick(dateItem.date)" t-attf-data-date="{{dateItem.date}}" t-attf-style="cursor: pointer;">
+                                            <div class="peepl-day-number" t-esc="dateItem.day"/>
+                                            <div t-if="dateItem.count > 0" class="peepl-date-badge">
+                                                <span t-esc="dateItem.count"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.activePage === 'table'">
+                <div class="peepl-table-view">
+                    <button class="peepl-back-button" t-on-click="state.selectedDate ? backToCalendar : backToDashboard">
+                        <i class="fa fa-arrow-left"/> Back to <t t-if="state.selectedDate">Calendar</t><t t-else="">Dashboard</t>
+                    </button>
+                    
+                    <t t-if="state.tableData.length === 0">
+                        <div class="peepl-no-data-container">
+                            <div class="peepl-no-data-content">
+                                <i class="fa fa-inbox peepl-no-data-icon"/>
+                                <h3 class="peepl-no-data-title">No Data Available</h3>
+                                <p class="peepl-no-data-text">There is no data to display at the moment.</p>
+                            </div>
+                        </div>
+                    </t>
+                    
+                    <div class="peepl-table-container" t-if="state.tableData.length > 0">
+                        <div class="peepl-table-header">
+                            <div class="peepl-table-header-left">
+                                <div t-attf-class="peepl-table-icon {{state.selectedKpi?.bgColor}}">
+                                    <i t-attf-class="fa {{state.selectedKpi?.icon}} {{state.selectedKpi?.color}}"/>
+                                </div>
+                                <div>
+                                    <h2 class="peepl-table-title">Data <t t-esc="state.selectedKpi?.title"/></h2>
+                                    <p class="peepl-table-subtitle">Manage and view detailed data records.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <table class="peepl-data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee Name</th>
+                                    <th t-if="state.selectedKpi?.id === 4">Contract Start Date</th>
+                                    <th t-if="state.selectedKpi?.id === 4">Contract End Date</th>
+                                    <th t-if="state.selectedKpi?.id !== 4">Date</th>
+                                    <th t-if="state.selectedKpi?.id !== 4">Check In</th>
+                                    <th t-if="state.selectedKpi?.id !== 4">Check Out</th>
+                                    <th>Status</th>
+                                    <th t-if="state.selectedKpi?.id !== 4">Worked Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.tableData" t-as="item" t-key="item.id">
+                                    <tr>
+                                        <td>#<t t-esc="item.id"/></td>
+                                        <td>
+                                            <div class="peepl-employee-cell">
+                                                <div class="peepl-avatar-small" t-esc="getInitials(item.employeeName)"/>
+                                                <div>
+                                                    <div class="peepl-employee-name" t-esc="item.employeeName"/>
+                                                    <div class="peepl-employee-division" t-esc="item.department || '-'"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td t-if="state.selectedKpi?.id === 4" t-esc="item.dateStart"/>
+                                        <td t-if="state.selectedKpi?.id === 4" t-esc="item.dateEnd"/>
+                                        <td t-if="state.selectedKpi?.id !== 4" t-esc="item.date"/>
+                                        <td t-if="state.selectedKpi?.id !== 4" t-esc="item.checkIn"/>
+                                        <td t-if="state.selectedKpi?.id !== 4" t-esc="item.checkOut"/>
+                                        <td>
+                                            <span t-attf-class="peepl-status-badge {{item.status === 'pending' ? 'peepl-status-pending' : item.status === 'expired' ? 'peepl-status-pending' : item.status === 'sick' ? 'peepl-status-sick' : 'peepl-status-approved'}}" t-esc="item.statusText"/>
+                                        </td>
+                                        <td t-if="state.selectedKpi?.id !== 4" t-esc="item.workedHours + ' hrs'"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

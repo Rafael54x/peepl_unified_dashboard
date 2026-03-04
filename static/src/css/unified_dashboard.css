@@ -1,0 +1,55 @@
+/* Scoped CSS untuk Unified Dashboard */
+.peepl-unified-dashboard .peepl-weekly-dashboard,
+.peepl-unified-dashboard .recruitment-dashboard,
+.peepl-unified-dashboard .o_attendance_analytics {
+    height: 100%;
+    padding: 1rem;
+}
+
+.peepl-unified-dashboard .card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.peepl-unified-dashboard .card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+}
+
+.peepl-unified-dashboard .table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.peepl-unified-dashboard .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.peepl-unified-dashboard .btn-primary {
+    background: #6366f1;
+    border-color: #6366f1;
+}
+
+.peepl-unified-dashboard .btn-primary:hover {
+    background: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.peepl-unified-dashboard .form-control, 
+.peepl-unified-dashboard .form-select {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.peepl-unified-dashboard .form-control:focus, 
+.peepl-unified-dashboard .form-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+}

@@ -1,0 +1,329 @@
+/* Sidebar Styles */
+.peepl-hr-dashboard {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.peepl-hr-dashboard .peepl-sidebar {
+    background: #051847;
+    color: #e4e7eb;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-sidebar {
+        background: #051847;
+    }
+}
+
+.peepl-hr-dashboard .peepl-sidebar.closed {
+    width: 70px;
+}
+
+.peepl-hr-dashboard .peepl-sidebar.closed .peepl-sidebar-header h3,
+.peepl-hr-dashboard .peepl-sidebar.closed .peepl-menu-item span {
+    display: none;
+}
+
+.peepl-hr-dashboard .peepl-sidebar-header {
+    padding: 24px 20px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.peepl-hr-dashboard .peepl-sidebar-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.peepl-hr-dashboard .peepl-btn-toggle {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e4e7eb;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.peepl-hr-dashboard .peepl-btn-toggle span {
+    width: 18px;
+    height: 2px;
+    background: #e4e7eb;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.peepl-hr-dashboard .peepl-sidebar.open .peepl-btn-toggle span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 4px);
+}
+
+.peepl-hr-dashboard .peepl-sidebar.open .peepl-btn-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.peepl-hr-dashboard .peepl-sidebar.open .peepl-btn-toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -4px);
+}
+
+.peepl-hr-dashboard .peepl-btn-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.peepl-hr-dashboard .peepl-sidebar-menu {
+    padding: 16px 12px;
+    flex: 1;
+}
+
+.peepl-hr-dashboard .peepl-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.peepl-hr-dashboard .peepl-menu-item i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.peepl-hr-dashboard .peepl-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.peepl-hr-dashboard .peepl-menu-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* Dropdown Styles */
+.peepl-hr-dashboard .peepl-menu-dropdown {
+    position: relative;
+}
+
+.peepl-hr-dashboard .peepl-menu-dropdown .peepl-menu-item {
+    position: relative;
+}
+
+.peepl-hr-dashboard .peepl-dropdown-icon {
+    margin-left: auto;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.peepl-hr-dashboard .peepl-dropdown-icon.open {
+    transform: rotate(180deg);
+}
+
+.peepl-hr-dashboard .peepl-dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 20px;
+}
+
+.peepl-hr-dashboard .peepl-dropdown-menu.show {
+    max-height: 200px;
+}
+
+.peepl-hr-dashboard .peepl-dropdown-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.peepl-hr-dashboard .peepl-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.peepl-hr-dashboard .peepl-sidebar.closed .peepl-dropdown-menu {
+    display: none;
+}
+
+.peepl-hr-dashboard .peepl-sidebar.closed .peepl-dropdown-icon {
+    display: none;
+}
+
+.peepl-hr-dashboard .peepl-main-content {
+    flex: 1;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-main-content {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .peepl-hr-dashboard {
+        flex-direction: column;
+    }
+    
+    .peepl-hr-dashboard .peepl-sidebar {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        z-index: 1001;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    }
+    
+    .peepl-hr-dashboard .peepl-sidebar.open {
+        right: 0;
+    }
+    
+    .peepl-hr-dashboard .peepl-sidebar-header {
+        display: none !important;
+    }
+    
+    .peepl-hr-dashboard .peepl-sidebar-menu {
+        padding: 60px 0 20px 0;
+    }
+    
+    .peepl-hr-dashboard .peepl-menu-item {
+        padding: 15px 25px;
+        font-size: 16px;
+        margin: 0;
+        border-radius: 0;
+        border-left: 3px solid transparent;
+    }
+    
+    .peepl-hr-dashboard .peepl-menu-item:hover,
+    .peepl-hr-dashboard .peepl-menu-item.active {
+        background: rgba(255,255,255,0.1);
+        border-left-color: #fff;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .peepl-hr-dashboard .peepl-mobile-navbar {
+            background: linear-gradient(90deg, #4338ca 0%, #6d28d9 100%);
+        }
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-navbar h3 {
+        color: #fff;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-burger {
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-burger span {
+        width: 25px;
+        height: 3px;
+        background: #fff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-burger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-burger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-burger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .peepl-hr-dashboard .peepl-mobile-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .peepl-hr-dashboard .peepl-main-content {
+        padding-top: 70px;
+    }
+}

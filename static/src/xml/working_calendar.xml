@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="peepl_unified_dashboard.WorkingCalendar">
+        <div class="peepl-dashboard-container">
+            <div class="peepl-working-calendar">
+                <div class="peepl-calendar-header">
+                    <div class="peepl-table-header-left">
+                        <div class="peepl-table-icon peepl-bg-violet-50">
+                            <i class="fa fa-calendar peepl-text-violet-500"/>
+                        </div>
+                        <div>
+                            <h2 class="peepl-table-title">Working Calendar</h2>
+                            <p class="peepl-table-subtitle">View public holidays for the year</p>
+                    <button t-if="state.isHRDashboardAllAccess" class="peepl-calendar-edit-btn" t-on-click="handleEditClick">
+                        <i class="fa fa-edit"/> Edit
+                    </button>
+                        </div>
+                    </div>
+                    <div class="peepl-calendar-controls">
+                        <div class="peepl-month-selector">
+                            <button class="peepl-month-btn" t-on-click="() => this.changeYear(-1)">
+                                <i class="fa fa-chevron-left"/>
+                            </button>
+                            <span class="peepl-month-text" t-esc="state.selectedYear"/>
+                            <button class="peepl-month-btn" t-on-click="() => this.changeYear(1)">
+                                <i class="fa fa-chevron-right"/>
+                            </button>
+                        </div>
+                        <div t-if="state.viewMode === 'month'" class="peepl-month-selector">
+                            <button class="peepl-month-btn" t-on-click="() => this.changeMonth('prev')">
+                                <i class="fa fa-chevron-left"/>
+                            </button>
+                            <span class="peepl-month-text" t-esc="getMonthName()"/>
+                            <button class="peepl-month-btn" t-on-click="() => this.changeMonth('next')">
+                                <i class="fa fa-chevron-right"/>
+                            </button>
+                        </div>
+                        <button t-if="state.viewMode === 'month'" class="peepl-back-button" t-on-click="backToYear">
+                            <i class="fa fa-arrow-left"/> Back to Year
+                        </button>
+                    </div>
+                </div>
+
+                <div class="peepl-working-calendar-grid">
+                    <t t-if="state.viewMode === 'year'">
+                        <div class="peepl-year-grid peepl-year-enter">
+                            <t t-foreach="state.calendarDays" t-as="monthItem" t-key="monthItem.uniqueKey">
+                                <div class="peepl-month-card peepl-month-card-interactive" t-on-click="() => this.selectMonth(monthItem.month)" t-attf-data-month="{{monthItem.month}}">
+                                    <div class="peepl-month-card-inner">
+                                        <div class="peepl-month-name-year" t-esc="monthItem.name"/>
+                                        <div class="peepl-mini-calendar">
+                                            <!-- Mini weekday headers -->
+                                            <div class="peepl-mini-weekdays">
+                                                <div class="peepl-mini-weekday">S</div>
+                                                <div class="peepl-mini-weekday">M</div>
+                                                <div class="peepl-mini-weekday">T</div>
+                                                <div class="peepl-mini-weekday">W</div>
+                                                <div class="peepl-mini-weekday">T</div>
+                                                <div class="peepl-mini-weekday">F</div>
+                                                <div class="peepl-mini-weekday">S</div>
+                                            </div>
+                                            <!-- Mini calendar days -->
+                                            <div class="peepl-mini-days">
+                                                <t t-foreach="monthItem.calendarDays" t-as="day" t-key="day.uniqueKey">
+                                                    <div t-if="day.empty" class="peepl-mini-day empty"/>
+                                                    <div t-else="" t-attf-class="peepl-mini-day {{day.isHoliday ? 'holiday' : ''}}" t-attf-title="{{day.isHoliday ? day.holidays.join(', ') : ''}}">
+                                                        <span t-esc="day.day"/>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div class="peepl-month-card-divider"/>
+                                        <div t-if="monthItem.holidayCount > 0" class="peepl-month-holiday-count peepl-has-holidays">
+                                            <i class="fa fa-calendar-times-o"/> 
+                                            <span t-esc="monthItem.holidayCount"/> 
+                                            <span t-if="monthItem.holidayCount === 1">holiday</span>
+                                            <span t-else="">holidays</span>
+                                        </div>
+                                        <div t-else="" class="peepl-month-no-holiday">
+                                            <i class="fa fa-check-circle"/> No holidays
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    
+                    <t t-if="state.viewMode === 'month'">
+                        <div class="peepl-month-view peepl-month-enter">
+                            <div class="peepl-calendar-weekdays">
+                                <div class="peepl-weekday" t-esc="getDayName(0)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(1)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(2)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(3)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(4)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(5)"/>
+                                <div class="peepl-weekday" t-esc="getDayName(6)"/>
+                            </div>
+                            
+                            <div class="peepl-calendar-days">
+                                <t t-if="state.calendarDays and state.calendarDays.length > 0" t-foreach="state.calendarDays" t-as="dayItem" t-key="dayItem.uniqueKey">
+                                    <div t-if="dayItem.empty" class="peepl-calendar-day empty"/>
+                                    <div t-else="" t-attf-class="peepl-calendar-day {{dayItem.isHoliday ? 'holiday' : ''}}" t-attf-data-date="{{dayItem.date}}">
+                                        <div class="peepl-day-number" t-esc="dayItem.day"/>
+                                        <div t-if="dayItem.isHoliday" class="peepl-holiday-info">
+                                            <t t-foreach="dayItem.holidays" t-as="holiday" t-key="holiday">
+                                                <div class="peepl-holiday-badge">
+                                                    <i class="fa fa-calendar-times-o"/>
+                                                    <span class="peepl-holiday-text" t-esc="holiday"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="peepl-calendar-legend">
+                    <t t-foreach="state.holidayTypes" t-as="holidayType" t-key="holidayType_index">
+                        <div class="peepl-legend-item">
+                            <div class="peepl-legend-badge peepl-legend-holiday">
+                                <i class="fa fa-calendar-times-o"/>
+                            </div>
+                            <span t-esc="holidayType.name"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

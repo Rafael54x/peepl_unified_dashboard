@@ -1,0 +1,668 @@
+.o_attendance_analytics {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.o_attendance_analytics .card {
+    transition: all 0.3s ease;
+    border-radius: 16px;
+}
+
+.o_attendance_analytics .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+}
+
+/* Summary Cards - Present */
+.o_card_present {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.o_card_present .o_card_label,
+.o_card_present .o_card_value,
+.o_card_present .o_card_desc,
+.o_card_present .o_card_icon {
+    color: #ffffff !important;
+}
+
+.o_card_present .o_card_label {
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.o_card_present .o_card_value {
+    font-size: 2.5rem;
+}
+
+.o_card_present .o_card_desc {
+    opacity: 0.8;
+}
+
+.o_card_present .o_card_icon_bg {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.o_card_present .o_card_icon {
+    font-size: 1.5rem;
+}
+
+/* Summary Cards - Late */
+.o_card_late {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+}
+
+.o_card_late .o_card_label,
+.o_card_late .o_card_value,
+.o_card_late .o_card_desc,
+.o_card_late .o_card_icon {
+    color: #ffffff !important;
+}
+
+.o_card_late .o_card_label {
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.o_card_late .o_card_value {
+    font-size: 2.5rem;
+}
+
+.o_card_late .o_card_desc {
+    opacity: 0.8;
+}
+
+.o_card_late .o_card_icon_bg {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.o_card_late .o_card_icon {
+    font-size: 1.5rem;
+}
+
+/* Summary Cards - Sick */
+.o_card_sick {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+}
+
+.o_card_sick .o_card_label,
+.o_card_sick .o_card_value,
+.o_card_sick .o_card_desc,
+.o_card_sick .o_card_icon {
+    color: #ffffff !important;
+}
+
+.o_card_sick .o_card_label {
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.o_card_sick .o_card_value {
+    font-size: 2.5rem;
+}
+
+.o_card_sick .o_card_desc {
+    opacity: 0.8;
+}
+
+.o_card_sick .o_card_icon_bg {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.o_card_sick .o_card_icon {
+    font-size: 1.5rem;
+}
+
+/* Summary Cards - Unpaid */
+.o_card_unpaid {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.o_card_unpaid .o_card_label,
+.o_card_unpaid .o_card_value,
+.o_card_unpaid .o_card_desc,
+.o_card_unpaid .o_card_icon {
+    color: #ffffff !important;
+}
+
+.o_card_unpaid .o_card_label {
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.o_card_unpaid .o_card_value {
+    font-size: 2.5rem;
+}
+
+.o_card_unpaid .o_card_desc {
+    opacity: 0.8;
+}
+
+.o_card_unpaid .o_card_icon_bg {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.o_card_unpaid .o_card_icon {
+    font-size: 1.5rem;
+}
+
+/* Detail Cards Headers */
+.o_detail_header_present {
+    background-color: #047857 !important;
+}
+
+.o_detail_header_late {
+    background-color: #b45309 !important;
+}
+
+.o_detail_header_sick {
+    background-color: #c2410c !important;
+}
+
+.o_detail_header_unpaid {
+    background-color: #b91c1c !important;
+}
+
+.o_detail_header_present h6,
+.o_detail_header_late h6,
+.o_detail_header_sick h6,
+.o_detail_header_unpaid h6 {
+    color: #ffffff !important;
+}
+
+/* Detail Cards Rows */
+.o_detail_row {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+}
+
+.o_detail_row:hover {
+    border-left-width: 4px;
+}
+
+.o_attendance_analytics .o_detail_row:hover {
+    background-color: #f8f9fa !important;
+}
+
+/* Dark mode support - multiple selectors */
+body.o_dark .o_attendance_analytics .o_detail_row:hover,
+.o_dark .o_attendance_analytics .card-body .o_detail_row:hover,
+[data-color-scheme="dark"] .o_attendance_analytics .o_detail_row:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .o_attendance_analytics .o_detail_row:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+}
+
+.o_detail_row:hover .fw-semibold {
+    color: var(--o-brand-primary, #017e84) !important;
+}
+
+.o_detail_row:hover .o_badge_present,
+.o_detail_row:hover .o_badge_late,
+.o_detail_row:hover .o_badge_sick,
+.o_detail_row:hover .o_badge_unpaid {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.o_detail_row .badge {
+    transition: all 0.3s ease;
+}
+
+/* Badges */
+.o_badge_present {
+    background-color: #a7f3d0;
+    color: #065f46;
+    font-weight: 700;
+}
+
+.o_badge_late {
+    background-color: #fde68a;
+    color: #78350f;
+    font-weight: 700;
+}
+
+.o_badge_sick {
+    background-color: #fed7aa;
+    color: #7c2d12;
+    font-weight: 700;
+}
+
+.o_badge_unpaid {
+    background-color: #fecaca;
+    color: #7f1d1d;
+    font-weight: 700;
+}
+
+/* Scrollbar */
+.o_attendance_analytics .card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.o_attendance_analytics .card-body::-webkit-scrollbar-track {
+    background: var(--o-view-background-color, #f1f5f9);
+    border-radius: 10px;
+}
+
+.o_attendance_analytics .card-body::-webkit-scrollbar-thumb {
+    background: var(--o-border-color, #cbd5e1);
+    border-radius: 10px;
+}
+
+.o_attendance_analytics .card-body::-webkit-scrollbar-thumb:hover {
+    background: var(--o-text-muted, #94a3b8);
+}
+
+/* Dark Mode Support */
+.o_dark .o_detail_card {
+    background-color: var(--o-view-background-color);
+}
+
+
+/* Collapsible Cards */
+.o_detail_card_body.o_collapsed {
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+
+.o_detail_card_header {
+    transition: background-color 0.2s ease;
+}
+
+.o_detail_card_header:hover {
+    opacity: 0.9;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+    .o_attendance_analytics {
+        padding: 1rem !important;
+    }
+    
+    .o_card_value {
+        font-size: 2rem !important;
+    }
+    
+    .o_detail_card {
+        max-height: none !important;
+    }
+    
+    .o_detail_card_body {
+        max-height: 300px !important;
+    }
+    
+    .o_detail_card_body.o_collapsed {
+        max-height: 0 !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .o_card_value {
+        font-size: 1.75rem !important;
+    }
+    
+    .o_card_icon_bg {
+        padding: 0.5rem !important;
+    }
+    
+    .o_card_icon {
+        font-size: 1.25rem !important;
+    }
+}
+
+
+/* Attendance Table Styling */
+.o_modern_table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.o_modern_row {
+    transition: background 0.3s ease;
+}
+
+.o_modern_row:hover {
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.03) 0%, rgba(155, 89, 182, 0.03) 100%);
+}
+
+.o_icon_wrapper {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(149, 165, 166, 0.08);
+    transition: all 0.3s ease;
+}
+
+.o_modern_row:hover .o_icon_wrapper {
+    background: rgba(52, 152, 219, 0.12);
+    transform: scale(1.1);
+}
+
+.o_modern_badge {
+    padding: 6px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border: none;
+    text-transform: capitalize;
+}
+
+.o_modern_badge_present {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+}
+
+.o_modern_badge_late {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+}
+
+.o_modern_badge_sick {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+}
+
+.o_modern_badge_unpaid {
+    background: linear-gradient(135deg, #e2e3e5 0%, #d6d8db 100%);
+    color: #383d41;
+}
+
+@media (prefers-color-scheme: dark) {
+    .o_attendance_table_card {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+    }
+    
+    .o_attendance_table_card .card-header {
+        background: rgba(23, 21, 46, 0.9) !important;
+    }
+    
+    .o_attendance_table_card h5 {
+        color: #e0e0e0 !important;
+    }
+    
+    .o_modern_table thead tr {
+        background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%) !important;
+        border-bottom: 2px solid #404040 !important;
+    }
+    
+    .o_modern_table thead th {
+        color: #a0a0a0 !important;
+    }
+    
+    .o_modern_row td {
+        border-bottom: 1px solid #333 !important;
+    }
+    
+    .o_modern_row span {
+        color: #d0d0d0 !important;
+    }
+    
+    .o_icon_wrapper {
+        background: rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    .o_modern_row:hover {
+        background: linear-gradient(90deg, rgba(52, 152, 219, 0.1) 0%, rgba(155, 89, 182, 0.1) 100%) !important;
+    }
+    
+    .o_modern_row:hover .o_icon_wrapper {
+        background: rgba(52, 152, 219, 0.15) !important;
+    }
+    
+    .o_modern_badge_present {
+        background: linear-gradient(135deg, #1e4620 0%, #2d5a2f 100%) !important;
+        color: #90ee90 !important;
+    }
+    
+    .o_modern_badge_late {
+        background: linear-gradient(135deg, #4a3c1a 0%, #5c4a20 100%) !important;
+        color: #ffd700 !important;
+    }
+    
+    .o_modern_badge_sick {
+        background: linear-gradient(135deg, #4a1e1e 0%, #5c2828 100%) !important;
+        color: #ff9999 !important;
+    }
+    
+    .o_modern_badge_unpaid {
+        background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%) !important;
+        color: #b0b0b0 !important;
+    }
+}
+
+body.o_dark .o_attendance_table_card,
+.o_dark .o_attendance_table_card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+}
+
+body.o_dark .o_attendance_table_card .card-header,
+.o_dark .o_attendance_table_card .card-header {
+    background: rgba(40, 40, 40, 0.9) !important;
+}
+
+body.o_dark .o_attendance_table_card h5,
+.o_dark .o_attendance_table_card h5 {
+    color: #e0e0e0 !important;
+}
+
+body.o_dark .o_modern_table thead tr,
+.o_dark .o_modern_table thead tr {
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%) !important;
+    border-bottom: 2px solid #404040 !important;
+}
+
+body.o_dark .o_modern_table thead th,
+.o_dark .o_modern_table thead th {
+    color: #a0a0a0 !important;
+}
+
+body.o_dark .o_modern_row td,
+.o_dark .o_modern_row td {
+    border-bottom: 1px solid #333 !important;
+}
+
+body.o_dark .o_modern_row span,
+.o_dark .o_modern_row span {
+    color: #d0d0d0 !important;
+}
+
+body.o_dark .o_icon_wrapper,
+.o_dark .o_icon_wrapper {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.o_dark .o_modern_row:hover,
+.o_dark .o_modern_row:hover {
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.1) 0%, rgba(155, 89, 182, 0.1) 100%) !important;
+}
+
+body.o_dark .o_modern_row:hover .o_icon_wrapper,
+.o_dark .o_modern_row:hover .o_icon_wrapper {
+    background: rgba(52, 152, 219, 0.15) !important;
+}
+
+body.o_dark .o_modern_badge_present,
+.o_dark .o_modern_badge_present {
+    background: linear-gradient(135deg, #1e4620 0%, #2d5a2f 100%) !important;
+    color: #90ee90 !important;
+}
+
+body.o_dark .o_modern_badge_late,
+.o_dark .o_modern_badge_late {
+    background: linear-gradient(135deg, #4a3c1a 0%, #5c4a20 100%) !important;
+    color: #ffd700 !important;
+}
+
+body.o_dark .o_modern_badge_sick,
+.o_dark .o_modern_badge_sick {
+    background: linear-gradient(135deg, #4a1e1e 0%, #5c2828 100%) !important;
+    color: #ff9999 !important;
+}
+
+body.o_dark .o_modern_badge_unpaid,
+.o_dark .o_modern_badge_unpaid {
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%) !important;
+    color: #b0b0b0 !important;
+}
+
+
+/* Mobile View - 2x2 Cards Layout */
+@media (max-width: 575px) {
+    .o_attendance_analytics .row.g-3 > [class*="col-"] {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+    
+    .o_attendance_analytics .row.g-4 > [class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .o_card_present .card,
+    .o_card_late .card,
+    .o_card_sick .card,
+    .o_card_unpaid .card {
+        min-height: 140px !important;
+    }
+    
+    .o_card_label {
+        font-size: 8px !important;
+        margin-bottom: 0.25rem !important;
+        line-height: 1.2 !important;
+        min-height: 20px !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+    
+    .o_card_desc {
+        font-size: 9px !important;
+        margin-top: 0.25rem !important;
+        line-height: 1.2 !important;
+        min-height: 22px !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+    
+    .o_card_value {
+        font-size: 1.25rem !important;
+        min-height: 30px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    .o_card_icon_bg {
+        width: 32px !important;
+        height: 32px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .o_card_icon {
+        font-size: 0.875rem !important;
+    }
+    
+    .card-body {
+        padding: 0.75rem !important;
+    }
+    
+    .o_attendance_analytics {
+        padding: 0.75rem !important;
+    }
+    
+    .o_attendance_analytics h1 {
+        font-size: 1.25rem !important;
+    }
+    
+    .o_attendance_analytics .text-muted {
+        font-size: 0.75rem !important;
+    }
+}
+
+
+/* Responsive Table */
+@media (max-width: 767px) {
+    .o_modern_table {
+        min-width: 600px;
+    }
+    
+    .o_modern_table td,
+    .o_modern_table th {
+        white-space: nowrap;
+    }
+}
+
+
+/* Perfect Circle Icon Background */
+.o_card_icon_bg {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+}
+
+@media (max-width: 575px) {
+    .o_card_icon_bg {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
+
+
+/* Align Icon with Value */
+.o_card_present .card-body,
+.o_card_late .card-body,
+.o_card_sick .card-body,
+.o_card_unpaid .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.o_card_present .d-flex,
+.o_card_late .d-flex,
+.o_card_sick .d-flex,
+.o_card_unpaid .d-flex {
+    align-items: center !important;
+}
+
+.o_card_icon_bg {
+    flex-shrink: 0;
+}
+
+
+/* Hide scrollbar but keep scroll functionality */
+.o_detail_card_body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.o_detail_card_body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+/* Chart Dark Mode */
+@media (prefers-color-scheme: dark) {
+    canvas {
+        filter: brightness(1.2) contrast(1.1);
+    }
+}
+
+body.o_dark canvas,
+.o_dark canvas {
+    filter: brightness(1.2) contrast(1.1);
+}

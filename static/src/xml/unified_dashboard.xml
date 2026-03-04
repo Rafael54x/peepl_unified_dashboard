@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="peepl_unified_dashboard.UnifiedDashboard">
+        <div class="peepl-unified-dashboard peepl-hr-dashboard">
+            <!-- Mobile Navbar -->
+            <div class="peepl-mobile-navbar d-md-none">
+                <h3>Peepl - HR Dashboard</h3>
+                <button class="peepl-mobile-burger" t-att-class="state.sidebarOpen ? 'active' : ''" t-on-click="toggleSidebar">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Overlay -->
+            <div class="peepl-mobile-overlay d-md-none" t-att-class="state.sidebarOpen ? 'show' : ''" t-on-click="toggleSidebar"></div>
+            
+            <!-- Sidebar -->
+            <div t-att-class="'peepl-sidebar d-md-flex ' + (state.sidebarOpen ? 'open' : 'closed')">
+                <div class="peepl-sidebar-header d-none d-md-block">
+                    <h3>Peepl - HR Dashboard</h3>
+                    <button class="peepl-btn-toggle" t-on-click="toggleSidebar">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+                <div class="peepl-sidebar-menu">
+                    <button class="peepl-menu-item" t-att-class="state.activeMenu === 'my_dashboard' ? 'active' : ''" t-on-click="() => this.setActiveMenu('my_dashboard')">
+                        <i class="fa fa-tachometer"></i>
+                        <span>My Dashboard</span>
+                    </button>
+                    <button class="peepl-menu-item" t-att-class="state.activeMenu === 'working_calendar' ? 'active' : ''" t-on-click="() => this.setActiveMenu('working_calendar')">
+                        <i class="fa fa-calendar"></i>
+                        <span>Working Calendar</span>
+                    </button>
+                    <!-- <div t-if="state.hasWeeklyReportAccess" class="peepl-menu-dropdown">
+                        <button class="peepl-menu-item" t-att-class="state.activeMenu === 'weekly_report' ? 'active' : ''" t-on-click="toggleWeeklyDropdown">
+                            <i class="fa fa-calendar"></i>
+                            <span>Weekly Report</span>
+                            <i class="fa fa-chevron-down peepl-dropdown-icon" t-att-class="state.weeklyDropdownOpen ? 'open' : ''"></i>
+                        </button>
+                        <div class="peepl-dropdown-menu" t-att-class="state.weeklyDropdownOpen ? 'show' : ''">
+                            <button class="peepl-dropdown-item" t-att-class="state.weeklyView === 'dashboard' ? 'active' : ''" t-on-click="() => this.setWeeklyView('dashboard')">
+                                <span>Dashboard</span>
+                            </button>
+                            <button class="peepl-dropdown-item" t-att-class="state.weeklyView === 'details' ? 'active' : ''" t-on-click="() => this.setWeeklyView('details')">
+                                <span>Details</span>
+                            </button>
+                        </div>
+                    </div> -->
+                    <button t-if="state.hasRecruitmentAccess" class="peepl-menu-item" t-att-class="state.activeMenu === 'recruitment' ? 'active' : ''" t-on-click="() => this.setActiveMenu('recruitment')">
+                        <i class="fa fa-users"></i>
+                        <span>Recruitment</span>
+                    </button>
+                    <button t-if="state.hasAttendanceAccess" class="peepl-menu-item" t-att-class="state.activeMenu === 'attendance' ? 'active' : ''" t-on-click="() => this.setActiveMenu('attendance')">
+                        <i class="fa fa-clock-o"></i>
+                        <span>Attendance</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="peepl-main-content">
+                <t t-if="state.activeMenu === 'my_dashboard'">
+                    <MyDashboard/>
+                </t>
+                <t t-elif="state.activeMenu === 'working_calendar'">
+                    <WorkingCalendar/>
+                </t>
+                <t t-elif="state.activeMenu === 'weekly_report'">
+                    <WeeklyReportDashboard setViewCallback.bind="setWeeklyViewCallback"/>
+                </t>
+                <t t-elif="state.activeMenu === 'recruitment'">
+                    <RecruitmentDashboard/>
+                </t>
+                <t t-elif="state.activeMenu === 'attendance'">
+                    <AttendanceDashboard/>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>
