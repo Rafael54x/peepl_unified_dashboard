@@ -237,7 +237,7 @@ class MyDashboard extends Component {
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
+            ['employee_id', 'check_in', 'attendance_type'],
             { order: 'check_in asc' }
         );
 
@@ -257,12 +257,9 @@ class MyDashboard extends Component {
             id: index + 1,
             employeeName: att.employee_id[1],
             department: empDeptMap[att.employee_id[0]],
-            date: new Date(att.check_in).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-            checkIn: new Date(att.check_in).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-            checkOut: att.check_out ? new Date(att.check_out).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) : '-',
+            date: new Date(att.check_in).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
             status: kpiId === 1 ? 'sick' : (att.attendance_type === 'present' ? 'approved' : 'pending'),
-            statusText: kpiId === 1 ? (att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave') : (att.attendance_type === 'present' ? 'Present' : 'Late'),
-            workedHours: att.worked_hours ? att.worked_hours.toFixed(2) : '0.00'
+            statusText: kpiId === 1 ? (att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave') : (att.attendance_type === 'present' ? 'Present' : 'Late')
         }));
     }
 
@@ -389,7 +386,7 @@ class MyDashboard extends Component {
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
+            ['employee_id', 'check_in', 'attendance_type'],
             {order: 'check_in desc' }
         );
 
@@ -408,11 +405,10 @@ class MyDashboard extends Component {
         this.state.tableData = attendances.map((att, index) => ({
             id: index + 1,
             employeeName: att.employee_id[1],
+            department: empDeptMap[att.employee_id[0]],
             date: new Date(att.check_in).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-            checkIn: new Date(att.check_in).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-            checkOut: att.check_out ? new Date(att.check_out).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) : '-',
-            statusText: att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave',
-            workedHours: att.worked_hours ? att.worked_hours.toFixed(2) : '0.00'
+            status: 'sick',
+            statusText: att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave'
         }));
     }
 
@@ -434,7 +430,7 @@ class MyDashboard extends Component {
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
+            ['employee_id', 'check_in', 'attendance_type'],
             { order: 'check_in desc' }
         );
 
@@ -453,11 +449,10 @@ class MyDashboard extends Component {
         this.state.tableData = attendances.map((att, index) => ({
             id: index + 1,
             employeeName: att.employee_id[1],
+            department: empDeptMap[att.employee_id[0]],
             date: new Date(att.check_in).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-            checkIn: new Date(att.check_in).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-            checkOut: att.check_out ? new Date(att.check_out).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) : '-',
-            statusText: att.attendance_type === 'present' ? 'Present' : 'Late',
-            workedHours: att.worked_hours ? att.worked_hours.toFixed(2) : '0.00'
+            status: att.attendance_type === 'present' ? 'approved' : 'pending',
+            statusText: att.attendance_type === 'present' ? 'Present' : 'Late'
         }));
     }
 

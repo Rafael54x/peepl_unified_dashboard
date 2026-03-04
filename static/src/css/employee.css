@@ -1,0 +1,493 @@
+/* ================================
+   EMPLOYEE PAGE STYLES
+   ================================ */
+
+.peepl-hr-dashboard .peepl-employee-page {
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Header Section */
+.peepl-hr-dashboard .peepl-employee-header {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 245, 250, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-header {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+        border: 1px solid rgba(71, 85, 105, 0.5);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.peepl-hr-dashboard .peepl-employee-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+.peepl-hr-dashboard .peepl-employee-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-title {
+        color: #f1f5f9;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0.5rem 0 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-subtitle {
+        color: #cbd5e1;
+    }
+}
+
+/* Controls Section */
+.peepl-hr-dashboard .peepl-employee-controls {
+    margin-bottom: 2rem;
+}
+
+.peepl-hr-dashboard .peepl-search-box {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.peepl-hr-dashboard .peepl-search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6366f1;
+    font-size: 1rem;
+}
+
+.peepl-hr-dashboard .peepl-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-search-input {
+        background: rgba(30, 41, 59, 0.95);
+        border-color: #334155;
+        color: #f1f5f9;
+    }
+}
+
+.peepl-hr-dashboard .peepl-search-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Department Filter */
+.peepl-hr-dashboard .peepl-department-filter {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.peepl-hr-dashboard .peepl-filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-filter-btn {
+        background: rgba(30, 41, 59, 0.8);
+        border-color: #334155;
+        color: #cbd5e1;
+    }
+}
+
+.peepl-hr-dashboard .peepl-filter-btn:hover {
+    border-color: #6366f1;
+    color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.peepl-hr-dashboard .peepl-filter-btn.peepl-filter-active {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border-color: #6366f1;
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-filter-btn.peepl-filter-active {
+        background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    }
+}
+
+/* Employee Grid */
+.peepl-hr-dashboard .peepl-employee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .peepl-hr-dashboard .peepl-employee-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .peepl-hr-dashboard .peepl-employee-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Employee Card */
+.peepl-hr-dashboard .peepl-employee-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-color: #334155;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+    z-index: 0;
+}
+
+.peepl-hr-dashboard .peepl-employee-card:hover::before {
+    left: 100%;
+}
+
+.peepl-hr-dashboard .peepl-employee-card:hover {
+    border-color: #6366f1;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(99, 102, 241, 0.25);
+    background: linear-gradient(135deg, #ede9fe 0%, #faf5ff 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-card:hover {
+        background: linear-gradient(135deg, #3730a3 0%, #4c1d95 100%);
+        border-color: #818cf8;
+    }
+}
+
+/* Card Header - Avatar */
+.peepl-hr-dashboard .peepl-employee-card-header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.peepl-hr-dashboard .peepl-employee-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 1rem;
+    object-fit: cover;
+    border: 3px solid #e2e8f0;
+    margin: 0 auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-avatar {
+        border-color: #475569;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-card:hover .peepl-employee-avatar {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.peepl-hr-dashboard .peepl-employee-avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.peepl-hr-dashboard .peepl-employee-card:hover .peepl-employee-avatar-placeholder {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+.peepl-hr-dashboard .peepl-employee-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background: #10b981;
+    border: 4px solid #f8fafc;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-status {
+        border-color: #1e293b;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+}
+
+/* Card Body - Info */
+.peepl-hr-dashboard .peepl-employee-card-body {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.peepl-hr-dashboard .peepl-employee-name {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-name {
+        color: #f1f5f9;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-job-title {
+    font-size: 0.875rem;
+    color: #6366f1;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+}
+
+.peepl-hr-dashboard .peepl-employee-department {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-department {
+        color: #cbd5e1;
+    }
+}
+
+/* Card Footer - Contact */
+.peepl-hr-dashboard .peepl-employee-card-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-card-footer {
+        border-top-color: #334155;
+    }
+}
+
+.peepl-hr-dashboard .peepl-contact-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.peepl-hr-dashboard .peepl-email-link {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.peepl-hr-dashboard .peepl-email-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.peepl-hr-dashboard .peepl-phone-link {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.peepl-hr-dashboard .peepl-phone-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Empty State */
+.peepl-hr-dashboard .peepl-employee-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #64748b;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-empty {
+        color: #cbd5e1;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-empty i {
+    font-size: 3rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-empty i {
+        color: #475569;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-empty h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    color: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-employee-empty h3 {
+        color: #f1f5f9;
+    }
+}
+
+.peepl-hr-dashboard .peepl-employee-empty p {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.95rem;
+}
+
+/* Stats Section */
+.peepl-hr-dashboard .peepl-employee-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.peepl-hr-dashboard .peepl-stat-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-stat-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-color: #334155;
+    }
+}
+
+.peepl-hr-dashboard .peepl-stat-card:hover {
+    border-color: #6366f1;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+}
+
+.peepl-hr-dashboard .peepl-stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #6366f1;
+    margin-bottom: 0.5rem;
+}
+
+.peepl-hr-dashboard .peepl-stat-label {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+    .peepl-hr-dashboard .peepl-stat-label {
+        color: #cbd5e1;
+    }
+}

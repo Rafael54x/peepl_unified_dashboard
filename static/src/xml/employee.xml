@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="peepl_unified_dashboard.Employee">
+        <div class="peepl-dashboard-container">
+            <div class="peepl-employee-page">
+                <!-- Header Section -->
+                <div class="peepl-employee-header">
+                    <div class="peepl-employee-header-left">
+                        <div class="peepl-employee-icon-wrapper peepl-bg-blue-50">
+                            <i class="fa fa-users peepl-text-blue-500"/>
+                        </div>
+                        <div>
+                            <h1 class="peepl-employee-title">Employee Directory</h1>
+                            <p class="peepl-employee-subtitle">
+                                <t t-if="state.isHRDashboardUserOnly">Your Profile</t>
+                                <t t-elif="state.isHRDashboardManager">Department Employees</t>
+                                <t t-else="">All Employees</t>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Section -->
+                <div class="peepl-employee-controls">
+                    <div class="peepl-search-box">
+                        <i class="fa fa-search"/>
+                        <input 
+                            type="text" 
+                            class="peepl-search-input"
+                            placeholder="Search by name, email, or position..."
+                            t-value="state.searchQuery"
+                            t-on-input="(e) => this.handleSearchChange(e.target.value)"
+                        />
+                    </div>
+
+                    <t t-if="state.isHRDashboardAllAccess">
+                        <div class="peepl-department-filter">
+                            <button class="peepl-filter-btn peepl-filter-all" t-on-click="() => this.handleDepartmentFilter(null)">
+                                <i class="fa fa-filter"/>
+                                All Departments
+                            </button>
+                            <t t-foreach="state.allDepartments" t-as="dept" t-key="dept.id">
+                                <button 
+                                    t-attf-class="peepl-filter-btn {{state.filterDepartment === dept.id ? 'peepl-filter-active' : ''}}"
+                                    t-on-click="() => this.handleDepartmentFilter(dept.id)"
+                                    t-esc="dept.name"
+                                />
+                            </t>
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Employee Grid Section -->
+                <div class="peepl-employee-grid">
+                    <t t-if="getFilteredEmployees().length > 0" t-foreach="getFilteredEmployees()" t-as="employee" t-key="employee.id">
+                        <div class="peepl-employee-card">
+                            <!-- Avatar Section -->
+                            <div class="peepl-employee-card-header">
+                                <t t-if="employee.image">
+                                    <img t-attf-src="{{employee.image}}" class="peepl-employee-avatar" t-attf-alt="{{employee.name}}"/>
+                                </t>
+                                <t t-else="">
+                                    <div class="peepl-employee-avatar-placeholder" t-esc="employee.initials"/>
+                                </t>
+                                <div class="peepl-employee-status"></div>
+                            </div>
+
+                            <!-- Employee Info Section -->
+                            <div class="peepl-employee-card-body">
+                                <h3 class="peepl-employee-name" t-esc="employee.name"/>
+                                <p class="peepl-employee-job-title" t-esc="employee.jobTitle"/>
+                                <p class="peepl-employee-department">
+                                    <i class="fa fa-building"/> <span t-esc="employee.department"/>
+                                </p>
+                            </div>
+
+                            <!-- Contact Section -->
+                            <div class="peepl-employee-card-footer">
+                                <a t-attf-href="mailto:{{employee.email}}" class="peepl-contact-link peepl-email-link" t-attf-title="{{employee.email}}">
+                                    <i class="fa fa-envelope"/>
+                                </a>
+                                <a t-attf-href="tel:{{employee.phone}}" class="peepl-contact-link peepl-phone-link" t-attf-title="{{employee.phone}}" t-if="employee.phone !== '-'">
+                                    <i class="fa fa-phone"/>
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="peepl-employee-empty">
+                            <i class="fa fa-inbox"/>
+                            <h3>No Employees Found</h3>
+                            <p>Try adjusting your search or filter criteria.</p>
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="peepl-employee-stats">
+                    <div class="peepl-stat-card">
+                        <div class="peepl-stat-value" t-esc="getFilteredEmployees().length"/>
+                        <div class="peepl-stat-label">
+                            <t t-if="state.isHRDashboardUserOnly">You</t>
+                            <t t-elif="state.isHRDashboardManager">Team Members</t>
+                            <t t-else="">Employees</t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

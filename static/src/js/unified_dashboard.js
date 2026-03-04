@@ -8,11 +8,12 @@ import { WeeklyReportDashboard } from "./weekly_report_dashboard";
 import { RecruitmentDashboard } from "./recruitment_dashboard";
 import { AttendanceDashboard } from "./attendance_dashboard";
 import { WorkingCalendar } from "./working_calendar";
+import { Employee } from "./employee";
 import { session } from "@web/session";
 
 class UnifiedDashboard extends Component {
     static template = "peepl_unified_dashboard.UnifiedDashboard";
-    static components = { MyDashboard, WeeklyReportDashboard, RecruitmentDashboard, AttendanceDashboard, WorkingCalendar };
+    static components = { MyDashboard, WeeklyReportDashboard, RecruitmentDashboard, AttendanceDashboard, WorkingCalendar, Employee };
 
     setup() {
         this.orm = useService("orm");

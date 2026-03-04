@@ -30,6 +30,10 @@
                         <i class="fa fa-calendar"></i>
                         <span>Working Calendar</span>
                     </button>
+                    <button class="peepl-menu-item" t-att-class="state.activeMenu === 'employee' ? 'active' : ''" t-on-click="() => this.setActiveMenu('employee')">
+                        <i class="fa fa-users"></i>
+                        <span>Employees</span>
+                    </button>
                     <!-- <div t-if="state.hasWeeklyReportAccess" class="peepl-menu-dropdown">
                         <button class="peepl-menu-item" t-att-class="state.activeMenu === 'weekly_report' ? 'active' : ''" t-on-click="toggleWeeklyDropdown">
                             <i class="fa fa-calendar"></i>
@@ -63,6 +67,9 @@
                 </t>
                 <t t-elif="state.activeMenu === 'working_calendar'">
                     <WorkingCalendar/>
+                </t>
+                <t t-elif="state.activeMenu === 'employee'">
+                    <Employee/>
                 </t>
                 <t t-elif="state.activeMenu === 'weekly_report'">
                     <WeeklyReportDashboard setViewCallback.bind="setWeeklyViewCallback"/>
