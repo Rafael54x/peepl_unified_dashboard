@@ -149,8 +149,7 @@ class Employee extends Component {
             res_id: employeeId,
             view_mode: 'form',
             views: [[false, 'form']],
-            target: 'current',
-            context: { 'form_view_ref': 'peepl_unified_dashboard.view_employee_form_readonly', 'readonly': true }
+            target: 'current'
         });
     }
 
