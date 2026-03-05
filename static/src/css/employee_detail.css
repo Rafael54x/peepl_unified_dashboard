@@ -1,1 +1,19 @@
-/* Employee Detail CSS - Scoped to prevent affecting main module */
+/* Employee Detail CSS */
+
+.o_action.o_view_controller {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.o_form_view {
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 2%;
+    padding-top: 1%;
+}
+
+.o_form_sheet_bg {
+    padding: 0;
+}

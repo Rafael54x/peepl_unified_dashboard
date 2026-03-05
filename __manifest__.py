@@ -43,6 +43,7 @@ Menggabungkan semua dashboard dalam satu modul:
             'peepl_unified_dashboard/static/src/css/attendance_dashboard.css',
             'peepl_unified_dashboard/static/src/css/working_calendar.css',
             'peepl_unified_dashboard/static/src/css/employee.css',
+            'peepl_unified_dashboard/static/src/css/employee_detail.css',
             'peepl_unified_dashboard/static/src/css/unified_dashboard.css',
             'peepl_unified_dashboard/static/src/css/modern_dashboards.css',
             'peepl_unified_dashboard/static/src/js/unified_dashboard.js',

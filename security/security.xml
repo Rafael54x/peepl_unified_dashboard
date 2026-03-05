@@ -26,6 +26,7 @@
     <record id="group_hr_dashboard_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="privilege_id" ref="res_groups_privilege_hr_dashboard"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_dashboard_user'))]"/>
         <field name="comment">Manager can access department data</field>
         <field name="sequence">20</field>
     </record>
@@ -33,11 +34,12 @@
     <record id="group_hr_dashboard_all_access" model="res.groups">
         <field name="name">All Access</field>
         <field name="privilege_id" ref="res_groups_privilege_hr_dashboard"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_dashboard_manager'))]"/>
         <field name="comment">Can access all data</field>
         <field name="sequence">30</field>
     </record>
 
-    <data noupdate="0">
+    <data noupdate="1">
         <!-- IR Rule: User can read all records, filtering done in JS -->
         <record id="hr_version_rule_dashboard_user" model="ir.rule">
             <field name="name">Dashboard User: Read all contracts</field>
