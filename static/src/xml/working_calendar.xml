@@ -51,19 +51,19 @@
                                         <div class="peepl-mini-calendar">
                                             <!-- Mini weekday headers -->
                                             <div class="peepl-mini-weekdays">
-                                                <div class="peepl-mini-weekday">S</div>
+                                                <div class="peepl-mini-weekday weekend">S</div>
                                                 <div class="peepl-mini-weekday">M</div>
                                                 <div class="peepl-mini-weekday">T</div>
                                                 <div class="peepl-mini-weekday">W</div>
                                                 <div class="peepl-mini-weekday">T</div>
                                                 <div class="peepl-mini-weekday">F</div>
-                                                <div class="peepl-mini-weekday">S</div>
+                                                <div class="peepl-mini-weekday weekend">S</div>
                                             </div>
                                             <!-- Mini calendar days -->
                                             <div class="peepl-mini-days">
                                                 <t t-foreach="monthItem.calendarDays" t-as="day" t-key="day.uniqueKey">
                                                     <div t-if="day.empty" class="peepl-mini-day empty"/>
-                                                    <div t-else="" t-attf-class="peepl-mini-day {{day.isHoliday ? 'holiday' : ''}} {{day.isTimeOff ? 'timeoff' : ''}}" t-attf-title="{{day.isHoliday ? day.holidays.join(', ') : day.timeOffType || ''}}">
+                                                    <div t-else="" t-attf-class="peepl-mini-day {{day.isHoliday ? 'holiday' : ''}} {{day.isTimeOff ? 'timeoff' : ''}} {{day.isWeekend ? 'weekend' : ''}}" t-attf-title="{{day.isHoliday ? day.holidays.join(', ') : day.timeOffType || ''}}">
                                                         <span t-esc="day.day"/>
                                                     </div>
                                                 </t>
@@ -88,20 +88,20 @@
                     <t t-if="state.viewMode === 'month'">
                         <div class="peepl-month-view peepl-month-enter">
                             <div class="peepl-calendar-weekdays">
-                                <div class="peepl-weekday" t-esc="getDayName(0)"/>
+                                <div class="peepl-weekday weekend" t-esc="getDayName(0)"/>
                                 <div class="peepl-weekday" t-esc="getDayName(1)"/>
                                 <div class="peepl-weekday" t-esc="getDayName(2)"/>
                                 <div class="peepl-weekday" t-esc="getDayName(3)"/>
                                 <div class="peepl-weekday" t-esc="getDayName(4)"/>
                                 <div class="peepl-weekday" t-esc="getDayName(5)"/>
-                                <div class="peepl-weekday" t-esc="getDayName(6)"/>
+                                <div class="peepl-weekday weekend" t-esc="getDayName(6)"/>
                             </div>
                             
                             <div class="peepl-calendar-days">
                                 <t t-if="state.calendarDays and state.calendarDays.length > 0" t-foreach="state.calendarDays" t-as="dayItem" t-key="dayItem.uniqueKey">
                                     <div t-if="dayItem.empty" class="peepl-calendar-day empty"/>
-                                    <div t-else="" t-attf-class="peepl-calendar-day {{dayItem.isHoliday ? 'holiday' : ''}} {{dayItem.isTimeOff ? 'timeoff' : ''}}" t-attf-data-date="{{dayItem.date}}" t-attf-title="{{dayItem.timeOffType || ''}}">
-                                        <div class="peepl-day-number" t-attf-class="{{dayItem.isTimeOff ? 'timeoff-text' : ''}}" t-esc="dayItem.day"/>
+                                    <div t-else="" t-attf-class="peepl-calendar-day {{dayItem.isHoliday ? 'holiday' : ''}} {{dayItem.isTimeOff ? 'timeoff' : ''}} {{dayItem.isWeekend ? 'weekend' : ''}}" t-attf-data-date="{{dayItem.date}}" t-attf-title="{{dayItem.timeOffType || ''}}">
+                                        <div class="peepl-day-number" t-attf-class="{{dayItem.isTimeOff ? 'timeoff-text' : ''}} {{dayItem.isWeekend ? 'weekend-text' : ''}}" t-esc="dayItem.day"/>
                                         <div t-if="dayItem.isHoliday" class="peepl-holiday-info">
                                             <t t-foreach="dayItem.holidays" t-as="holiday" t-key="holiday">
                                                 <div class="peepl-holiday-badge">

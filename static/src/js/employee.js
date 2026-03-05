@@ -143,22 +143,29 @@ class Employee extends Component {
     }
 
     openEmployeeForm(employeeId) {
-        this.action.doAction({
-            type: 'ir.actions.act_window',
-            res_model: 'hr.employee',
-            res_id: employeeId,
-            view_mode: 'form',
-            views: [[false, 'form']],
-            target: 'current'
-        });
+        const isUserOnly = this.state.isHRDashboardUserOnly;
+        
+        if (isUserOnly) {
+            this.action.doAction({
+                type: 'ir.actions.client',
+                tag: 'peepl_unified_dashboard.employee_detail',
+                target: 'current',
+                context: { active_id: employeeId }
+            });
+        } else {
+            this.action.doAction({
+                type: 'ir.actions.act_window',
+                res_model: 'hr.employee',
+                res_id: employeeId,
+                view_mode: 'form',
+                views: [[false, 'form']],
+                target: 'current'
+            });
+        }
     }
 
     openEmployeeModal(employee) {
-        if (this.state.isHRDashboardUserOnly) {
-            this.state.selectedEmployee = employee;
-        } else {
-            this.openEmployeeForm(employee.id);
-        }
+        this.openEmployeeForm(employee.id);
     }
 
     closeEmployeeModal() {

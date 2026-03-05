@@ -1,6 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_unified_dashboard_access,access_unified_dashboard_access,model_unified_dashboard_access,base.group_user,1,0,0,0
-access_hr_employee_dashboard_user,access_hr_employee_dashboard_user,hr.model_hr_employee,group_hr_dashboard_user,1,0,0,0
 access_hr_attendance_dashboard_user,access_hr_attendance_dashboard_user,hr_attendance.model_hr_attendance,group_hr_dashboard_user,1,0,0,0
 access_hr_version_dashboard_user,access_hr_version_dashboard_user,hr.model_hr_version,group_hr_dashboard_user,1,0,0,0
 access_hr_version_admin,access_hr_version_admin,hr.model_hr_version,base.group_system,1,1,1,1

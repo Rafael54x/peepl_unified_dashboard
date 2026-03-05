@@ -225,11 +225,14 @@ class WorkingCalendar extends Component {
                 const isHoliday = dayHolidays.length > 0;
                 const isTimeOff = timeOffDates[day] ? true : false;
                 const timeOffType = timeOffDates[day] || '';
+                const dayOfWeek = new Date(this.state.selectedYear, month, day).getDay();
+                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
                 calendarDays.push({
                     empty: false,
                     day: day,
                     isHoliday: isHoliday,
                     isTimeOff: isTimeOff,
+                    isWeekend: isWeekend,
                     timeOffType: timeOffType,
                     holidays: dayHolidays,
                     uniqueKey: `day-${month}-${day}`
@@ -317,12 +320,15 @@ class WorkingCalendar extends Component {
             const holidays = leaveDates[dateStr] || [];
             const isTimeOff = timeOffDates[dateStr] ? true : false;
             const timeOffType = timeOffDates[dateStr] || '';
+            const dayOfWeek = new Date(this.state.selectedYear, this.state.selectedMonth, day).getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
             calendarDays.push({ 
                 day, 
                 date: dateStr,
                 uniqueKey: dateStr,
                 isHoliday: holidays.length > 0,
                 isTimeOff: isTimeOff,
+                isWeekend: isWeekend,
                 timeOffType: timeOffType,
                 holidays: holidays
             });

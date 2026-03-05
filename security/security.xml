@@ -26,7 +26,6 @@
     <record id="group_hr_dashboard_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="privilege_id" ref="res_groups_privilege_hr_dashboard"/>
-        <field name="implied_ids" eval="[(4, ref('group_hr_dashboard_user'))]"/>
         <field name="comment">Manager can access department data</field>
         <field name="sequence">20</field>
     </record>
@@ -34,12 +33,11 @@
     <record id="group_hr_dashboard_all_access" model="res.groups">
         <field name="name">All Access</field>
         <field name="privilege_id" ref="res_groups_privilege_hr_dashboard"/>
-        <field name="implied_ids" eval="[(4, ref('group_hr_dashboard_manager'))]"/>
         <field name="comment">Can access all data</field>
         <field name="sequence">30</field>
     </record>
 
-    <data noupdate="1">
+    <data noupdate="0">
         <!-- IR Rule: User can read all records, filtering done in JS -->
         <record id="hr_version_rule_dashboard_user" model="ir.rule">
             <field name="name">Dashboard User: Read all contracts</field>
@@ -50,6 +48,28 @@
             <field name="perm_write" eval="0"/>
             <field name="perm_create" eval="0"/>
             <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="hr_version_rule_dashboard_manager" model="ir.rule">
+            <field name="name">Dashboard Manager: Full access to contracts</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hr_dashboard_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="hr_version_rule_dashboard_all_access" model="ir.rule">
+            <field name="name">Dashboard All Access: Full access to contracts</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hr_dashboard_all_access'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
         </record>
 
         <record id="hr_version_rule_admin" model="ir.rule">
@@ -63,17 +83,6 @@
             <field name="perm_unlink" eval="1"/>
         </record>
 
-        <record id="hr_employee_rule_dashboard_user" model="ir.rule">
-            <field name="name">Dashboard User: Read all employees</field>
-            <field name="model_id" ref="hr.model_hr_employee"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('group_hr_dashboard_user'))]"/>
-            <field name="perm_read" eval="1"/>
-            <field name="perm_write" eval="0"/>
-            <field name="perm_create" eval="0"/>
-            <field name="perm_unlink" eval="0"/>
-        </record>
-
         <record id="hr_attendance_rule_dashboard_user" model="ir.rule">
             <field name="name">Dashboard User: Read all attendance</field>
             <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
@@ -83,6 +92,28 @@
             <field name="perm_write" eval="0"/>
             <field name="perm_create" eval="0"/>
             <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="hr_attendance_rule_dashboard_manager" model="ir.rule">
+            <field name="name">Dashboard Manager: Full access to attendance</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hr_dashboard_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="hr_attendance_rule_dashboard_all_access" model="ir.rule">
+            <field name="name">Dashboard All Access: Full access to attendance</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_hr_dashboard_all_access'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
         </record>
     </data>
 

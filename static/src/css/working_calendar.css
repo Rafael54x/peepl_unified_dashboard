@@ -253,9 +253,17 @@
     width: 100%;
 }
 
+.peepl-hr-dashboard .peepl-mini-weekday.weekend {
+    color: #dc2626;
+}
+
 @media (prefers-color-scheme: dark) {
     .peepl-hr-dashboard .peepl-mini-weekday {
         color: #818cf8;
+    }
+    
+    .peepl-hr-dashboard .peepl-mini-weekday.weekend {
+        color: #f87171;
     }
 }
 
@@ -279,6 +287,11 @@
     box-sizing: border-box;
     aspect-ratio: 1;
     width: 100%;
+}
+
+.peepl-hr-dashboard .peepl-mini-day.weekend {
+    color: #dc2626;
+    border-color: #fca5a5;
 }
 
 /* Tooltip styling */
@@ -348,6 +361,10 @@
         background: #374151;
         border-color: #4b5563;
         color: #f1f5f9;
+    }
+    
+    .peepl-hr-dashboard .peepl-mini-day.weekend {
+        color: #f87171;
     }
 }
 
@@ -474,9 +491,17 @@
     box-sizing: border-box;
 }
 
+.peepl-hr-dashboard .peepl-weekday.weekend {
+    color: #dc2626;
+}
+
 @media (prefers-color-scheme: dark) {
     .peepl-hr-dashboard .peepl-weekday {
         color: #818cf8;
+    }
+    
+    .peepl-hr-dashboard .peepl-weekday.weekend {
+        color: #f87171;
     }
 }
 
@@ -536,9 +561,17 @@
     color: #dc2626;
 }
 
+.peepl-hr-dashboard .peepl-day-number.weekend-text {
+    color: #dc2626;
+}
+
 @media (prefers-color-scheme: dark) {
     .peepl-hr-dashboard .peepl-day-number.timeoff-text {
         color: #fca5a5;
+    }
+    
+    .peepl-hr-dashboard .peepl-day-number.weekend-text {
+        color: #f87171;
     }
 }
 
@@ -558,9 +591,17 @@
     color: #dc2626;
 }
 
+.peepl-hr-dashboard .peepl-calendar-day.weekend {
+    border-color: #fca5a5;
+}
+
 @media (prefers-color-scheme: dark) {
     .peepl-hr-dashboard .peepl-calendar-day.holiday .peepl-day-number {
         color: #fca5a5;
+    }
+    
+    .peepl-hr-dashboard .peepl-calendar-day.weekend {
+        border-color: #fca5a5;
     }
 }
 
