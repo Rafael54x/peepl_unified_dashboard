@@ -78,8 +78,13 @@ class WorkingCalendar extends Component {
             return leave.employee_id && leave.employee_id[1] === userName;
         });
         
-        console.log('Filtered Time Offs for', userName, ':', filteredTimeOffs);
-        return filteredTimeOffs;
+        const enrichedTimeOffs = filteredTimeOffs.map(leave => ({
+            ...leave,
+            displayName: `${leave.employee_id[1]} - ${leave.holiday_status_id ? leave.holiday_status_id[1] : 'Time Off'}`
+        }));
+        
+        console.log('Filtered Time Offs for', userName, ':', enrichedTimeOffs);
+        return enrichedTimeOffs;
     }
 
     async loadYearView() {
@@ -191,12 +196,13 @@ class WorkingCalendar extends Component {
                 endDate.setHours(0, 0, 0, 0);
                 
                 const timeOffType = timeOff.holiday_status_id ? timeOff.holiday_status_id[1] : 'Time Off';
+                const displayName = `${timeOff.employee_id[1]} - ${timeOffType}`;
                 
                 while (currentDate <= endDate) {
                     if (currentDate.getMonth() === month && currentDate.getFullYear() === this.state.selectedYear) {
                         const day = currentDate.getDate();
                         if (!timeOffDates[day]) {
-                            timeOffDates[day] = timeOffType;
+                            timeOffDates[day] = displayName;
                         }
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -287,12 +293,12 @@ class WorkingCalendar extends Component {
             const toUTC = new Date(timeOff.date_to + 'Z');
             
             const currentDate = new Date(fromUTC);
-            const timeOffType = timeOff.holiday_status_id ? timeOff.holiday_status_id[1] : 'Time Off';
+            const displayName = `${timeOff.employee_id[1]} - ${timeOff.holiday_status_id ? timeOff.holiday_status_id[1] : 'Time Off'}`;
             
             while (currentDate <= toUTC) {
                 const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
                 if (!timeOffDates[dateStr]) {
-                    timeOffDates[dateStr] = timeOffType;
+                    timeOffDates[dateStr] = displayName;
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
             }

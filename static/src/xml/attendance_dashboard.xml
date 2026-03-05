@@ -409,6 +409,7 @@
                                     <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Date</th>
                                     <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Clock In</th>
                                     <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Clock Out</th>
+                                    <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Worked Hours</th>
                                     <th class="px-4 py-3 fw-semibold" style="font-size: 11px; letter-spacing: 1px; color: #6c757d; text-transform: uppercase; border: none;">Status</th>
                                 </tr>
                             </thead>
@@ -438,6 +439,9 @@
                                                 </div>
                                                 <span style="color: #34495e; font-size: 14px;"><t t-esc="att.check_out ? att.check_out.split(' ')[1].substring(0, 5) : '-'"/></span>
                                             </div>
+                                        </td>
+                                        <td class="px-4 py-3" style="border: none; border-bottom: 1px solid #f0f0f0;">
+                                            <span style="color: #34495e; font-size: 14px;"><t t-esc="att.worked_hours"/></span>
                                         </td>
                                         <td class="px-4 py-3" style="border: none; border-bottom: 1px solid #f0f0f0;">
                                             <span class="badge o_modern_badge" t-attf-class="o_modern_badge_{{att.attendance_type || 'present'}}">

@@ -124,7 +124,7 @@
                             <span class="peepl-stat-value" t-esc="state.totalHolidays"/>
                         </div>
                         <div class="peepl-stat-item">
-                            <span class="peepl-stat-label">Total Time Offs:</span>
+                            <span class="peepl-stat-label">Your Total Time Offs:</span>
                             <span class="peepl-stat-value" t-esc="state.totalTimeOffs"/>
                         </div>
                     </div>

@@ -350,16 +350,25 @@ class HrAttendanceAnalytics extends Component {
     async loadData() {
         this.state.loading = true;
         
+        const startDate = this.state.startDate || (new Date().getFullYear() + "-01-01");
+        const endDate = this.state.endDate || (new Date().getFullYear() + "-12-31");
+        
         const domain = [
-            ["check_in", ">=", this.state.startDate + " 00:00:00"],
-            ["check_in", "<=", this.state.endDate + " 23:59:59"]
+            ["check_in", ">=", startDate + " 00:00:00"],
+            ["check_in", "<=", endDate + " 23:59:59"]
         ];
 
         const attendances = await this.orm.searchRead(
             "hr.attendance",
             domain,
-            ["employee_id", "attendance_type", "worked_hours"]
+            ["id", "employee_id", "check_in", "check_out", "attendance_type", "worked_hours"],
+            {order: "check_in desc"}
         );
+
+        // Format worked_hours
+        attendances.forEach(att => {
+            att.worked_hours = parseFloat((att.worked_hours || 0).toFixed(2));
+        });
 
         // Get employee departments
         const employeeIds = [...new Set(attendances.map(a => a.employee_id[0]))];
@@ -514,7 +523,7 @@ class HrAttendanceAnalytics extends Component {
         const attendances = await this.orm.searchRead(
             "hr.attendance",
             domain,
-            ["id", "check_in", "check_out", "attendance_type"],
+            ["id", "check_in", "check_out", "attendance_type", "worked_hours"],
             { order: "check_in desc" }
         );
 
@@ -529,6 +538,11 @@ class HrAttendanceAnalytics extends Component {
             if (att.check_out) {
                 const checkOutUTC = new Date(att.check_out + ' UTC');
                 att.check_out = this.formatDateTime(checkOutUTC);
+            }
+            if (att.worked_hours) {
+                const hours = Math.floor(att.worked_hours);
+                const minutes = Math.round((att.worked_hours - hours) * 60);
+                att.worked_hours = `${hours}:${String(minutes).padStart(2, '0')}`;
             }
         });
 

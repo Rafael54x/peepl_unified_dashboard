@@ -237,7 +237,7 @@ class MyDashboard extends Component {
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'attendance_type'],
+            ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
             { order: 'check_in asc' }
         );
 
@@ -253,14 +253,47 @@ class MyDashboard extends Component {
             empDeptMap[emp.id] = emp.department_id ? emp.department_id[1] : '-';
         });
 
-        this.state.tableData = attendances.map((att, index) => ({
-            id: index + 1,
-            employeeName: att.employee_id[1],
-            department: empDeptMap[att.employee_id[0]],
-            date: new Date(att.check_in).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-            status: kpiId === 1 ? 'sick' : (att.attendance_type === 'present' ? 'approved' : 'pending'),
-            statusText: kpiId === 1 ? (att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave') : (att.attendance_type === 'present' ? 'Present' : 'Late')
-        }));
+        this.state.tableData = attendances.map((att, index) => {
+            const checkIn = new Date(att.check_in + ' UTC');
+            const checkOut = att.check_out ? new Date(att.check_out + ' UTC') : null;
+            
+            if (kpiId === 1) {
+                return {
+                    id: index + 1,
+                    employeeName: att.employee_id[1],
+                    department: empDeptMap[att.employee_id[0]],
+                    fromDate: checkIn.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+                    untilDate: checkOut ? checkOut.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) : '-',
+                    status: 'sick',
+                    statusText: att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave'
+                };
+            } else {
+                let workedTime = '-';
+                
+                if (att.worked_hours) {
+                    const hours = Math.floor(att.worked_hours);
+                    const minutes = Math.round((att.worked_hours - hours) * 60);
+                    workedTime = `${hours}:${String(minutes).padStart(2, '0')}`;
+                } else if (checkOut) {
+                    const minutes = Math.round((checkOut - checkIn) / (1000 * 60));
+                    const hours = Math.floor(minutes / 60);
+                    const mins = minutes % 60;
+                    workedTime = `${hours}:${String(mins).padStart(2, '0')}`;
+                }
+                
+                return {
+                    id: index + 1,
+                    employeeName: att.employee_id[1],
+                    department: empDeptMap[att.employee_id[0]],
+                    date: checkIn.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+                    checkIn: checkIn.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                    checkOut: checkOut ? checkOut.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '-',
+                    workedTime: workedTime,
+                    status: att.attendance_type === 'present' ? 'approved' : 'pending',
+                    statusText: att.attendance_type === 'present' ? 'Present' : 'Late'
+                };
+            }
+        });
     }
 
     getMonthName() {
@@ -386,7 +419,7 @@ class MyDashboard extends Component {
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'attendance_type'],
+            ['employee_id', 'check_in', 'check_out', 'attendance_type'],
             {order: 'check_in desc' }
         );
 
@@ -402,14 +435,20 @@ class MyDashboard extends Component {
             empDeptMap[emp.id] = emp.department_id ? emp.department_id[1] : '-';
         });
 
-        this.state.tableData = attendances.map((att, index) => ({
-            id: index + 1,
-            employeeName: att.employee_id[1],
-            department: empDeptMap[att.employee_id[0]],
-            date: new Date(att.check_in).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-            status: 'sick',
-            statusText: att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave'
-        }));
+        this.state.tableData = attendances.map((att, index) => {
+            const checkIn = new Date(att.check_in + ' UTC');
+            const checkOut = att.check_out ? new Date(att.check_out + ' UTC') : null;
+            
+            return {
+                id: index + 1,
+                employeeName: att.employee_id[1],
+                department: empDeptMap[att.employee_id[0]],
+                fromDate: checkIn.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+                untilDate: checkOut ? checkOut.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) : '-',
+                status: 'sick',
+                statusText: att.attendance_type === 'sick' ? 'Sick Leave' : 'Unpaid Leave'
+            };
+        });
     }
 
     async loadAttendanceData() {
@@ -421,18 +460,29 @@ class MyDashboard extends Component {
             ['id'],
             { limit: 1 }
         );
+        console.log('Employee search result:', employees);
+        
         if (employees.length > 0) {
             domain.push(['employee_id', '=', employees[0].id]);
+            console.log('Domain with employee:', domain);
         } else {
+            console.log('No employee found for:', this.userName);
             domain.push(['employee_id', '=', -1]);
         }
         
         const attendances = await this.orm.searchRead(
             'hr.attendance',
             domain,
-            ['employee_id', 'check_in', 'attendance_type'],
+            ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
             { order: 'check_in desc' }
         );
+        console.log('First attendance record:', attendances[0]);
+        console.log('Attendance records found:', attendances.length);
+
+        if (attendances.length === 0) {
+            this.state.tableData = [];
+            return;
+        }
 
         const employeeIds = attendances.map(att => att.employee_id[0]);
         const employees2 = await this.orm.searchRead(
@@ -446,14 +496,34 @@ class MyDashboard extends Component {
             empDeptMap[emp.id] = emp.department_id ? emp.department_id[1] : '-';
         });
 
-        this.state.tableData = attendances.map((att, index) => ({
-            id: index + 1,
-            employeeName: att.employee_id[1],
-            department: empDeptMap[att.employee_id[0]],
-            date: new Date(att.check_in).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-            status: att.attendance_type === 'present' ? 'approved' : 'pending',
-            statusText: att.attendance_type === 'present' ? 'Present' : 'Late'
-        }));
+        this.state.tableData = attendances.map((att, index) => {
+            const checkIn = new Date(att.check_in + ' UTC');
+            const checkOut = att.check_out ? new Date(att.check_out + ' UTC') : null;
+            let workedTime = '-';
+            
+            if (att.worked_hours) {
+                const hours = Math.floor(att.worked_hours);
+                const minutes = Math.round((att.worked_hours - hours) * 60);
+                workedTime = `${hours}:${String(minutes).padStart(2, '0')}`;
+            } else if (checkOut) {
+                const minutes = Math.round((checkOut - checkIn) / (1000 * 60));
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                workedTime = `${hours}:${String(mins).padStart(2, '0')}`;
+            }
+            
+            return {
+                id: index + 1,
+                employeeName: att.employee_id[1],
+                department: empDeptMap[att.employee_id[0]],
+                date: checkIn.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+                checkIn: checkIn.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                checkOut: checkOut ? checkOut.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '-',
+                workedTime: workedTime,
+                status: att.attendance_type === 'present' ? 'approved' : 'pending',
+                statusText: att.attendance_type === 'present' ? 'Present' : 'Late'
+            };
+        });
     }
 
     async loadContractData() {

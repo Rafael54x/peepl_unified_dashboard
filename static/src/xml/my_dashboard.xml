@@ -176,9 +176,13 @@
                                     <th>Employee Name</th>
                                     <th t-if="state.selectedKpi?.id === 4">Contract Start Date</th>
                                     <th t-if="state.selectedKpi?.id === 4">Contract End Date</th>
-                                    <th t-if="state.selectedKpi?.id === 2 and state.selectedDate">Check-in Time</th>
-                                    <th t-if="state.selectedKpi?.id !== 4 and !state.selectedDate">Update Date</th>
+                                    <th t-if="state.selectedKpi?.id === 1">From Date</th>
+                                    <th t-if="state.selectedKpi?.id === 1">Until Date</th>
+                                    <th t-if="state.selectedKpi?.id === 2">Date</th>
+                                    <th t-if="state.selectedKpi?.id === 2">Check In</th>
+                                    <th t-if="state.selectedKpi?.id === 2">Check Out</th>
                                     <th>Status</th>
+                                    <th t-if="state.selectedKpi?.id === 2">Worked Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,10 +200,15 @@
                                         </td>
                                         <td t-if="state.selectedKpi?.id === 4" t-esc="item.dateStart"/>
                                         <td t-if="state.selectedKpi?.id === 4" t-esc="item.dateEnd"/>
-                                        <td t-if="state.selectedKpi?.id !== 4" t-esc="item.date"/>
+                                        <td t-if="state.selectedKpi?.id === 1" t-esc="item.fromDate"/>
+                                        <td t-if="state.selectedKpi?.id === 1" t-esc="item.untilDate"/>
+                                        <td t-if="state.selectedKpi?.id === 2" t-esc="item.date"/>
+                                        <td t-if="state.selectedKpi?.id === 2" t-esc="item.checkIn"/>
+                                        <td t-if="state.selectedKpi?.id === 2" t-esc="item.checkOut"/>
                                         <td>
                                             <span t-attf-class="peepl-status-badge {{item.status === 'pending' ? 'peepl-status-pending' : item.status === 'expired' ? 'peepl-status-pending' : item.status === 'sick' ? 'peepl-status-sick' : 'peepl-status-approved'}}" t-esc="item.statusText"/>
                                         </td>
+                                        <td t-if="state.selectedKpi?.id === 2" t-esc="item.workedTime"/>
                                     </tr>
                                 </t>
                             </tbody>
