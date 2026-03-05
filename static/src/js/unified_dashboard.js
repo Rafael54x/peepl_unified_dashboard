@@ -42,11 +42,6 @@ class UnifiedDashboard extends Component {
         });
     }
 
-    getInitialMenu() {
-        const savedMenu = localStorage.getItem('peepl_active_menu');
-        return savedMenu || 'my_dashboard';
-    }
-
     async checkAccess() {
         try {
             const result = await this.orm.call('unified.dashboard.access', 'check_user_access', []);
