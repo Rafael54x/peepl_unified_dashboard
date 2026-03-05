@@ -518,16 +518,12 @@ class HrAttendanceAnalytics extends Component {
             ["employee_id", "=", parseInt(empId)]
         ];
 
-        console.log("Fetching attendances for employee ID:", parseInt(empId));
-
         const attendances = await this.orm.searchRead(
             "hr.attendance",
             domain,
             ["id", "check_in", "check_out", "attendance_type", "worked_hours"],
             { order: "check_in desc" }
         );
-
-        console.log("Attendances fetched:", attendances);
 
         // Convert UTC to local timezone
         attendances.forEach(att => {

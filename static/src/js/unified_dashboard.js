@@ -55,10 +55,7 @@ class UnifiedDashboard extends Component {
                 this.state.hasRecruitmentAccess = result.hasRecruitmentAccess;
                 this.state.hasAttendanceAccess = result.hasAttendanceAccess;
             }
-            
-            console.log('Access Result:', result);
         } catch (error) {
-            console.error('Error checking access:', error);
             this.state.hasWeeklyReportAccess = false;
             this.state.hasRecruitmentAccess = false;
             this.state.hasAttendanceAccess = false;

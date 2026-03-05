@@ -31,7 +31,6 @@ class WorkingCalendar extends Component {
             const result = await this.orm.call('unified.dashboard.access', 'check_user_access', []);
             this.state.isHRDashboardAllAccess = result.isHRDashboardAllAccess || false;
         } catch (error) {
-            console.log('Could not check user role:', error);
             this.state.isHRDashboardAllAccess = false;
         }
     }
@@ -66,7 +65,6 @@ class WorkingCalendar extends Component {
     async getTimeOffs() {
         const fullName = session.partner_display_name || session.name || 'User';
         const userName = fullName.includes(',') ? fullName.split(',').pop().trim() : fullName;
-        console.log('Current User Name:', userName);
         
         const allTimeOffs = await this.orm.searchRead(
             'hr.leave',
@@ -83,7 +81,6 @@ class WorkingCalendar extends Component {
             displayName: `${leave.employee_id[1]} - ${leave.holiday_status_id ? leave.holiday_status_id[1] : 'Time Off'}`
         }));
         
-        console.log('Filtered Time Offs for', userName, ':', enrichedTimeOffs);
         return enrichedTimeOffs;
     }
 

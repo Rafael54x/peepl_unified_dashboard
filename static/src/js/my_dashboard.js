@@ -11,7 +11,6 @@ class MyDashboard extends Component {
         this.orm = useService("orm");
         const fullName = session.partner_display_name || session.name || 'User';
         this.userName = fullName.includes(',') ? fullName.split(',').pop().trim() : fullName;
-        console.log('Setup - User Name for query:', this.userName);
         this.state = useState({
             sidebarOpen: true,
             activePage: 'dashboard',
@@ -460,13 +459,10 @@ class MyDashboard extends Component {
             ['id'],
             { limit: 1 }
         );
-        console.log('Employee search result:', employees);
         
         if (employees.length > 0) {
             domain.push(['employee_id', '=', employees[0].id]);
-            console.log('Domain with employee:', domain);
         } else {
-            console.log('No employee found for:', this.userName);
             domain.push(['employee_id', '=', -1]);
         }
         
@@ -476,8 +472,6 @@ class MyDashboard extends Component {
             ['employee_id', 'check_in', 'check_out', 'attendance_type', 'worked_hours'],
             { order: 'check_in desc' }
         );
-        console.log('First attendance record:', attendances[0]);
-        console.log('Attendance records found:', attendances.length);
 
         if (attendances.length === 0) {
             this.state.tableData = [];
@@ -536,12 +530,10 @@ class MyDashboard extends Component {
                 ['id', 'name'],
                 { limit: 1 }
             );
-            console.log('User Only - Searching employee with name:', this.userName, 'Result:', employees);
             
             if (employees.length > 0) {
                 const empId = employees[0].id;
                 domain = [['id', '=', empId], ['contract_date_start', '!=', false]];
-                console.log('Final Employee ID:', empId);
             } else {
                 domain = [['id', '=', -1]];
             }
@@ -552,11 +544,9 @@ class MyDashboard extends Component {
                 ['department_id'],
                 { limit: 1 }
             );
-            console.log('Manager - Current Employee:', currentEmployee);
             if (currentEmployee.length > 0 && currentEmployee[0].department_id) {
                 const deptId = currentEmployee[0].department_id[0];
                 domain = [['department_id', '=', deptId], ['contract_date_start', '!=', false]];
-                console.log('Manager - Department ID:', deptId, 'Domain:', domain);
             } else {
                 domain = [['id', '=', -1]];
             }

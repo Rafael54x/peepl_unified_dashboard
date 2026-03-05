@@ -40,7 +40,7 @@ class Employee extends Component {
             this.state.isHRDashboardManager = result.isHRDashboardManager || false;
             this.state.isHRDashboardAllAccess = result.isHRDashboardAllAccess || false;
         } catch (error) {
-            console.log('Could not check user role:', error);
+            // Silent fail
         }
     }
 
