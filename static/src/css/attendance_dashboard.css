@@ -1,11 +1,28 @@
 .o_attendance_analytics {
     height: 100vh;
     overflow-y: auto;
+    background: #ffffff;
+    color: #1e293b;
 }
 
-.o_attendance_analytics .card {
-    transition: all 0.3s ease;
-    border-radius: 16px;
+@media (prefers-color-scheme: dark) {
+    .o_attendance_analytics {
+        background: #0f172a;
+        color: #e2e8f0;
+    }
+}
+
+body.o_dark .o_attendance_analytics,
+.o_dark .o_attendance_analytics {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+
+body.o_dark .o_attendance_analytics .card,
+.o_dark .o_attendance_analytics .card {
+    background: #1e293b;
+    border: 1px solid #334155;
 }
 
 .o_attendance_analytics .card:hover {
@@ -22,6 +39,23 @@
 .o_card_present .o_card_value,
 .o_card_present .o_card_desc,
 .o_card_present .o_card_icon {
+    color: #ffffff !important;
+}
+
+/* Light mode override */
+@media (prefers-color-scheme: light) {
+    .o_card_present .o_card_label,
+    .o_card_present .o_card_value,
+    .o_card_present .o_card_desc,
+    .o_card_present .o_card_icon {
+        color: #ffffff !important;
+    }
+}
+
+body:not(.o_dark) .o_card_present .o_card_label,
+body:not(.o_dark) .o_card_present .o_card_value,
+body:not(.o_dark) .o_card_present .o_card_desc,
+body:not(.o_dark) .o_card_present .o_card_icon {
     color: #ffffff !important;
 }
 
