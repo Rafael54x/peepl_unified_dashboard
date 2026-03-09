@@ -36,7 +36,7 @@ class WorkingCalendar extends Component {
     }
 
     handleEditClick() {
-        this.actionService.doAction(264);
+        this.actionService.doAction('peepl_unified_dashboard.action_holiday_type');
     }
 
     async loadHolidayTypes() {
