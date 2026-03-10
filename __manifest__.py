@@ -25,6 +25,9 @@ Menggabungkan semua dashboard dalam satu modul:
         'peepl_weekly_report',
         'resource',
         'hr_holidays',
+        'peepl_attendance',
+        'peepl_hr_custom',
+        'peepl_hr_payroll',
     ],
     'images': ['static/description/icon.png'],
     'data': [
@@ -33,6 +36,8 @@ Menggabungkan semua dashboard dalam satu modul:
         'views/hr_employee_views.xml',
         'views/unified_dashboard_menu.xml',
         'views/holiday_type_views.xml',
+        'views/hr_payroll_structure_views.xml',
+        'views/hr_payslip_run_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
